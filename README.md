@@ -26,8 +26,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Condition | Folder | Source | Status |
 |---|---|---|---|
 | Acute pharyngitis | [conditions/pharyngitis](conditions/pharyngitis) | McIsaac 1998, 2004; IDSA 2012 | Implemented |
+| Acute and subacute low back pain | [conditions/low_back_pain](conditions/low_back_pain) | Downie 2013; Hill 2008, 2011; NICE NG59 | Implemented |
 
-The remaining 49 are tracked in issues and added one at a time.
+The remaining 48 are tracked in issues and added one at a time.
 
 ## Quick start
 
@@ -41,7 +42,7 @@ pytest
 Use the pharyngitis module:
 
 ```python
-from conditions.pharyngitis.score import PharyngitisFeatures, mcisaac_recommendation
+from conditions.pharyngitis import PharyngitisFeatures, mcisaac_recommendation
 
 features = PharyngitisFeatures(
     age_years=28,
@@ -52,6 +53,29 @@ features = PharyngitisFeatures(
 )
 rec = mcisaac_recommendation(features)
 print(rec.score, rec.action, rec.citations)
+```
+
+Use the low back pain modules:
+
+```python
+from conditions.low_back_pain import (
+    StartBackResponses,
+    start_back_stratification,
+)
+
+responses = StartBackResponses(
+    leg_pain_in_last_2_weeks=True,
+    shoulder_or_neck_pain_in_last_2_weeks=False,
+    walked_only_short_distances=True,
+    dressed_more_slowly=False,
+    not_safe_to_be_physically_active=True,
+    worrying_thoughts_a_lot=True,
+    pain_is_terrible_never_better=False,
+    not_enjoying_usual_things=True,
+    bothersomeness="moderately",
+)
+result = start_back_stratification(responses)
+print(result.risk_band, result.recommended_management)
 ```
 
 ## Contributing
