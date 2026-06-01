@@ -1,5 +1,9 @@
 # autonomous-care-algorithms
 
+[![tests](https://github.com/txthedx/autonomous-care-algorithms/actions/workflows/tests.yml/badge.svg)](https://github.com/txthedx/autonomous-care-algorithms/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+
 Open-source, citation-backed clinical decision algorithms for the most common primary care presentations. Implementations follow published scoring systems and society guidelines, with every clinical rule traceable to a primary reference.
 
 ## Status
@@ -27,8 +31,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 |---|---|---|---|
 | Acute pharyngitis | [conditions/pharyngitis](conditions/pharyngitis) | McIsaac 1998, 2004; IDSA 2012 | Implemented |
 | Acute and subacute low back pain | [conditions/low_back_pain](conditions/low_back_pain) | Downie 2013; Hill 2008, 2011; NICE NG59 | Implemented |
+| Community-acquired pneumonia (severity) | [conditions/pneumonia](conditions/pneumonia) | Lim 2003; BTS 2009; NICE NG138 | Implemented |
 
-The remaining 48 are tracked in issues and added one at a time.
+The remaining 47 are tracked in issues and added one at a time.
 
 ## Quick start
 
@@ -76,6 +81,22 @@ responses = StartBackResponses(
 )
 result = start_back_stratification(responses)
 print(result.risk_band, result.recommended_management)
+```
+
+Use the pneumonia severity module (CRB-65 in primary care, CURB-65 with labs):
+
+```python
+from conditions.pneumonia import Crb65Features, crb_65_assessment
+
+features = Crb65Features(
+    age_years=72,
+    confusion=False,
+    respiratory_rate_per_minute=24,
+    systolic_bp_mmhg=110,
+    diastolic_bp_mmhg=70,
+)
+result = crb_65_assessment(features)
+print(result.score, result.severity_band, result.recommended_disposition)
 ```
 
 ## Contributing

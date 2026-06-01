@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.3.0] — 2026-06-01
+
+### Added
+- Third condition: **community-acquired pneumonia severity**.
+  - **CRB-65** (no labs, primary care first-line): four-criterion clinical score with low/moderate/high severity bands and Lim 2003 mortality estimates.
+  - **CURB-65** (with serum urea): five-criterion score with three severity bands plus ICU-consideration language at scores 4 and 5.
+  - Both scores explicitly remind the user to synthesize with factors the score does not capture: oxygenation, radiographic extent, comorbidities, social factors, pregnancy.
+  - Sources: Lim 2003 (PMID 12728155), BTS 2009 (PMID 19783532), Mandell 2007 / IDSA-ATS (PMID 17278083), NICE NG138 (2019).
+- **Continuous integration:** GitHub Actions workflow runs pytest on Python 3.11 and 3.12 for every push and PR to main.
+- README status badge (test run state) and language/license badges.
+- 64 new tests, including threshold-boundary tests (urea 7.0 vs 7.01, RR 29 vs 30, SBP 89 vs 90, DBP 60 vs 61, age 64 vs 65). Total repo test count: 155.
+
 ## [0.2.0] — 2026-06-01
 
 ### Added
