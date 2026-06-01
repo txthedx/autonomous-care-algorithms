@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.4.0] — 2026-06-01
+
+### Added
+- Fourth condition: **atrial fibrillation stroke and bleeding risk**.
+  - **CHA₂DS₂-VASc** stroke risk score (0 to 9) with annual stroke risk bands from Lip 2010 and the ESC 2020 sex-stratified anticoagulation recommendation framing (male 0 / 1 / ≥ 2; female 0–1 / 2 / ≥ 3).
+  - **HAS-BLED** bleeding risk score (0 to 9) with the explicit ESC 2020 framing that high HAS-BLED does **not** justify withholding anticoagulation; output includes the list of currently-positive modifiable factors.
+  - Algorithm doc describes the Canadian CCS 2020 CHADS-65 frame and how to map a CHA₂DS₂-VASc result to it.
+  - Sources: Lip 2010 (PMID 19762550), Pisters 2010 (PMID 20299623), ESC 2020 / Hindricks 2021 (PMID 32860505), CCS 2020 / Andrade 2020.
+- 50 new tests, including component contributions, age-band exclusivity (CHA₂DS₂-VASc), age threshold strictness for HAS-BLED (65 vs 66), sex-stratified anticoagulation thresholds, modifiable-factor enumeration, and the ESC do-not-withhold language. Total repo test count: 205.
+
 ## [0.3.0] — 2026-06-01
 
 ### Added

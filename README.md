@@ -32,8 +32,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Acute pharyngitis | [conditions/pharyngitis](conditions/pharyngitis) | McIsaac 1998, 2004; IDSA 2012 | Implemented |
 | Acute and subacute low back pain | [conditions/low_back_pain](conditions/low_back_pain) | Downie 2013; Hill 2008, 2011; NICE NG59 | Implemented |
 | Community-acquired pneumonia (severity) | [conditions/pneumonia](conditions/pneumonia) | Lim 2003; BTS 2009; NICE NG138 | Implemented |
+| Atrial fibrillation (stroke and bleeding risk) | [conditions/atrial_fibrillation](conditions/atrial_fibrillation) | Lip 2010; Pisters 2010; ESC 2020; CCS 2020 | Implemented |
 
-The remaining 47 are tracked in issues and added one at a time.
+The remaining 46 are tracked in issues and added one at a time.
 
 ## Quick start
 
@@ -97,6 +98,27 @@ features = Crb65Features(
 )
 result = crb_65_assessment(features)
 print(result.score, result.severity_band, result.recommended_disposition)
+```
+
+Use the atrial fibrillation modules (CHA₂DS₂-VASc for stroke risk, HAS-BLED for bleeding risk):
+
+```python
+from conditions.atrial_fibrillation import (
+    Cha2ds2VascFeatures,
+    cha2ds2_vasc_assessment,
+)
+
+features = Cha2ds2VascFeatures(
+    age_years=72,
+    sex="female",
+    congestive_heart_failure=False,
+    hypertension=True,
+    diabetes=True,
+    prior_stroke_tia_or_thromboembolism=False,
+    vascular_disease=False,
+)
+result = cha2ds2_vasc_assessment(features)
+print(result.score, result.recommended_anticoagulation)
 ```
 
 ## Contributing
