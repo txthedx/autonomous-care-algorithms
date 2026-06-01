@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.5.0] — 2026-06-01
+
+### Added
+- Fifth condition: **uncomplicated UTI in women** (Bent 2002 decision rule).
+  - Two-stage logic: complicating-factors gate first, then the Bent symptom-count and vaginal-symptom decision tree.
+  - Five probability bands: `not_applicable_complicated`, `alternative_diagnoses_considered`, `low`, `intermediate`, `high`.
+  - Recommendations align with Bent 2002 and the IDSA/ESCMID 2010 guideline (Gupta 2011).
+  - Sources: Bent 2002 JAMA (PMID 12020306), Gupta 2011 / IDSA (PMID 21292654), NICE NG109 (2018).
+- 34 new tests covering each complicating factor, precedence between complicating factors and vaginal symptoms, symptom-count boundaries (0 / 1 / 2+), each cardinal symptom independently, and abstract clinical vignettes. Total repo test count: 239.
+
 ## [0.4.0] — 2026-06-01
 
 ### Added

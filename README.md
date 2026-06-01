@@ -33,8 +33,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Acute and subacute low back pain | [conditions/low_back_pain](conditions/low_back_pain) | Downie 2013; Hill 2008, 2011; NICE NG59 | Implemented |
 | Community-acquired pneumonia (severity) | [conditions/pneumonia](conditions/pneumonia) | Lim 2003; BTS 2009; NICE NG138 | Implemented |
 | Atrial fibrillation (stroke and bleeding risk) | [conditions/atrial_fibrillation](conditions/atrial_fibrillation) | Lip 2010; Pisters 2010; ESC 2020; CCS 2020 | Implemented |
+| Uncomplicated UTI in women | [conditions/urinary_tract_infection](conditions/urinary_tract_infection) | Bent 2002; Gupta 2011 (IDSA); NICE NG109 | Implemented |
 
-The remaining 46 are tracked in issues and added one at a time.
+The remaining 45 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: Ottawa Ankle / Knee Rules, Wells DVT, Wells PE + PERC, HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
 
 ## Quick start
 
@@ -119,6 +120,38 @@ features = Cha2ds2VascFeatures(
 )
 result = cha2ds2_vasc_assessment(features)
 print(result.score, result.recommended_anticoagulation)
+```
+
+Use the UTI module (Bent 2002 decision rule for uncomplicated cystitis in women):
+
+```python
+from conditions.urinary_tract_infection import (
+    UtiComplicatingFactors,
+    UtiPresentingFeatures,
+    uti_assessment,
+)
+
+symptoms = UtiPresentingFeatures(
+    dysuria=True,
+    urinary_frequency=True,
+    hematuria=False,
+    suprapubic_or_back_pain=False,
+    vaginal_discharge=False,
+    vaginal_irritation=False,
+)
+factors = UtiComplicatingFactors(
+    pregnancy=False,
+    male=False,
+    diabetes_uncontrolled_or_immunocompromise=False,
+    indwelling_catheter_or_recent_instrumentation=False,
+    known_urinary_tract_abnormality=False,
+    recent_antibiotic_use=False,
+    symptoms_more_than_7_days=False,
+    recurrent_uti=False,
+    flank_pain_or_fever_or_systemic_symptoms=False,
+)
+result = uti_assessment(symptoms, factors)
+print(result.pretest_probability_band, result.recommended_action)
 ```
 
 ## Contributing
