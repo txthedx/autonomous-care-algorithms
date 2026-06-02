@@ -35,8 +35,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Atrial fibrillation (stroke and bleeding risk) | [conditions/atrial_fibrillation](conditions/atrial_fibrillation) | Lip 2010; Pisters 2010; ESC 2020; CCS 2020 | Implemented |
 | Uncomplicated UTI in women | [conditions/urinary_tract_infection](conditions/urinary_tract_infection) | Bent 2002; Gupta 2011 (IDSA); NICE NG109 | Implemented |
 | Acute ankle and midfoot injury | [conditions/ankle_injury](conditions/ankle_injury) | Stiell 1992, 1993; Bachmann 2003 | Implemented |
+| Acute knee injury | [conditions/knee_injury](conditions/knee_injury) | Stiell 1995, 1996; Bachmann 2004 | Implemented |
 
-The remaining 44 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: Ottawa Knee Rule, Wells DVT, Wells PE + PERC, HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
+The remaining 43 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: Wells DVT, Wells PE + PERC, HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
 
 ## Quick start
 
