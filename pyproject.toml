@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autonomous-care-algorithms"
-version = "0.7.0"
+version = "0.8.0"
 description = "Open-source, citation-backed clinical decision algorithms for common primary care presentations."
 readme = "README.md"
 requires-python = ">=3.11"
