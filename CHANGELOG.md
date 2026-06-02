@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.8.0] — 2026-06-02
+
+### Added
+- Eighth condition: **deep vein thrombosis (Wells DVT score)**.
+  - `wells_dvt_two_tier(features)` — modified Wells (2003) interpretation returning DVT *unlikely* (score ≤ 1) or *likely* (score ≥ 2).
+  - `wells_dvt_three_tier(features)` — original Wells (1997) interpretation returning low / moderate / high pretest probability with prevalence estimates from the derivation cohort.
+  - Single `WellsDvtFeatures` dataclass with all ten items. The `previously_documented_dvt` item (added in 2003) contributes to the modified score only; the original 1997 score omits it.
+  - Negative point for `alternative_diagnosis_at_least_as_likely` (-2) handled correctly across both interpretations.
+  - Sources: Wells 1997 *Lancet* (PMID 9428249), Wells 2003 *NEJM* (PMID 14507948), Scarvelis 2006 *CMAJ* (PMID 17060659).
+- 42 new tests covering each item's contribution, the -2 alternative-diagnosis penalty, both interpretation boundaries (two-tier 1/2; three-tier 0/1 and 2/3), version-specific scoring (modified vs original), and the output shape. Total repo test count: 353.
+
+Closes #2.
+
 ## [0.7.0] — 2026-06-02
 
 ### Added
