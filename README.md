@@ -34,8 +34,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Community-acquired pneumonia (severity) | [conditions/pneumonia](conditions/pneumonia) | Lim 2003; BTS 2009; NICE NG138 | Implemented |
 | Atrial fibrillation (stroke and bleeding risk) | [conditions/atrial_fibrillation](conditions/atrial_fibrillation) | Lip 2010; Pisters 2010; ESC 2020; CCS 2020 | Implemented |
 | Uncomplicated UTI in women | [conditions/urinary_tract_infection](conditions/urinary_tract_infection) | Bent 2002; Gupta 2011 (IDSA); NICE NG109 | Implemented |
+| Acute ankle and midfoot injury | [conditions/ankle_injury](conditions/ankle_injury) | Stiell 1992, 1993; Bachmann 2003 | Implemented |
 
-The remaining 45 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: Ottawa Ankle / Knee Rules, Wells DVT, Wells PE + PERC, HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
+The remaining 44 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: Ottawa Knee Rule, Wells DVT, Wells PE + PERC, HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
 
 ## Quick start
 
@@ -152,6 +153,34 @@ factors = UtiComplicatingFactors(
 )
 result = uti_assessment(symptoms, factors)
 print(result.pretest_probability_band, result.recommended_action)
+```
+
+Use the ankle injury module (Ottawa Ankle Rule):
+
+```python
+from conditions.ankle_injury import (
+    AnkleAssessmentFeatures,
+    ApplicabilityFactors,
+    ottawa_ankle_assessment,
+)
+
+features = AnkleAssessmentFeatures(
+    pain_in_malleolar_zone=True,
+    tender_lateral_malleolus_distal_6cm=False,
+    tender_medial_malleolus_distal_6cm=False,
+    unable_to_bear_weight_immediately_and_now=True,
+)
+applicability = ApplicabilityFactors(
+    age_under_18=False,
+    intoxication=False,
+    distracting_injury=False,
+    decreased_sensation_or_neurologic_deficit=False,
+    gross_deformity=False,
+    isolated_skin_injury=False,
+    head_injury_or_decreased_consciousness=False,
+)
+result = ottawa_ankle_assessment(features, applicability)
+print(result.imaging_indicated, result.indicating_criteria)
 ```
 
 ## Contributing
