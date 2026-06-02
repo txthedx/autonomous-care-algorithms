@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.6.0] — 2026-06-02
+
+### Added
+- Sixth condition: **acute ankle and midfoot injury** — Ottawa Ankle and Foot Rules.
+  - `ottawa_ankle_assessment` for the malleolar zone (lateral malleolus, medial malleolus, weight-bearing criteria).
+  - `ottawa_foot_assessment` for the midfoot zone (5th metatarsal base, navicular, weight-bearing criteria).
+  - Shared `ApplicabilityFactors` dataclass enforces the population exclusions from Stiell 1992 (age under 18, intoxication, distracting injury, decreased sensation, gross deformity, isolated skin injury, head injury). When any factor is present, `rule_applies` is False and the recommendation defers to clinical judgment.
+  - Sources: Stiell 1992 (PMID 1554175), Stiell 1993 (PMID 8433468), Bachmann 2003 systematic review (PMID 12595378), Plint 1999 pediatric validation (PMID 10530659).
+- 39 new tests covering each applicability factor, applicability precedence, zone-pain gating, each individual criterion, and the output shape. Total repo test count: 278.
+
+Closes #1.
+
 ## [0.5.0] — 2026-06-01
 
 ### Added
