@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.7.0] — 2026-06-02
+
+### Added
+- Seventh condition: **acute knee injury** — Ottawa Knee Rule.
+  - `ottawa_knee_assessment(features, applicability)` returns whether the rule applies, whether imaging is indicated, and which of the five criteria triggered.
+  - Five criteria implemented per Stiell 1995: age ≥ 55, isolated patellar tenderness, fibular head tenderness, inability to flex knee to 90°, inability to bear weight (four steps) both immediately and at presentation.
+  - Population exclusions per Stiell 1995: age under 18, isolated skin injury, gross deformity, decreased consciousness, paraplegia or multiple injuries, re-presentation more than 7 days after injury. Pediatric patients receive an explicit pointer to the Pittsburgh Knee Rules as the validated alternative.
+  - Sources: Stiell 1995 (PMID 7574121), Stiell 1996 (PMID 8594242), Bachmann 2004 systematic review (PMID 14734335), Bauer 1995 (PMID 8530779) referenced for the pediatric Pittsburgh alternative.
+- 33 new tests covering each applicability factor, applicability precedence, the age-55 boundary (54 vs 55), each individual criterion, and the output shape. Total repo test count: 311.
+
+Closes #8.
+
 ## [0.6.0] — 2026-06-02
 
 ### Added
