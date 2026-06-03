@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Roadmap
+    url: https://github.com/txthedx/autonomous-care-algorithms/issues/9
+    about: See the overall roadmap and domain backlog before opening a new condition issue.
+  - name: Contributing guide
+    url: https://github.com/txthedx/autonomous-care-algorithms/blob/main/CONTRIBUTING.md
+    about: Citation and testing requirements for contributions.

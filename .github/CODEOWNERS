@@ -1,0 +1,7 @@
+# Default reviewer for all changes.
+# Clinical logic and documentation changes are reviewed by the maintainer.
+
+*       @txthedx
+
+# Algorithm modules and clinical text get an additional clinical-review-needed
+# label applied by the issue/PR templates rather than a separate code owner.

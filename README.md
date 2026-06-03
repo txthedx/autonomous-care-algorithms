@@ -1,8 +1,10 @@
 # autonomous-care-algorithms
 
 [![tests](https://github.com/txthedx/autonomous-care-algorithms/actions/workflows/tests.yml/badge.svg)](https://github.com/txthedx/autonomous-care-algorithms/actions/workflows/tests.yml)
+[![Latest release](https://img.shields.io/github/v/release/txthedx/autonomous-care-algorithms?sort=semver)](https://github.com/txthedx/autonomous-care-algorithms/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![DOI-ready](https://img.shields.io/badge/cite-CITATION.cff-orange.svg)](CITATION.cff)
 
 Open-source, citation-backed clinical decision algorithms for the most common primary care presentations. Implementations follow published scoring systems and society guidelines, with every clinical rule traceable to a primary reference.
 
