@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.9.0] — 2026-06-02
+
+### Added
+- Ninth condition: **pulmonary embolism (Wells PE score and PERC)**.
+  - `wells_pe_two_tier(features)` — modified Wells PE interpretation (PE *unlikely* at ≤ 4, *likely* at > 4).
+  - `wells_pe_three_tier(features)` — original Wells PE interpretation (low / moderate / high at < 2, 2–6, > 6) with prevalence estimates from Wells 2001.
+  - `perc_assessment(features, pretest_probability_is_low)` — eight PERC criteria with an explicit gate: the function refuses to rule out PE when pretest probability is not low, routing instead to the Wells/D-dimer pathway.
+  - Sources: Wells 2000 *Thromb Haemost* (PMID 10744147), Wells 2001 *Ann Intern Med* (PMID 11453709), Kline 2004 *J Thromb Haemost* (PMID 15304025), Kline 2008 *J Thromb Haemost* (PMID 18318689), ESC 2019 / Konstantinides (PMID 31504429).
+- 51 new tests covering each Wells PE item's contribution, both interpretation boundaries, each PERC criterion, the PERC gate against non-low pretest probability, and the output shape. Total repo test count: 404.
+
+Closes #3.
+
 ## [0.8.0] — 2026-06-02
 
 ### Added
