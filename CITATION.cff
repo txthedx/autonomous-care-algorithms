@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "autonomous-care-algorithms: open-source clinical decision algorithms for primary care"
+message: "If you use this software, please cite both the repository and the underlying primary sources for any algorithm you reference."
+type: software
+authors:
+  - alias: txthedx
+    affiliation: "txthedx"
+repository-code: "https://github.com/txthedx/autonomous-care-algorithms"
+url: "https://github.com/txthedx/autonomous-care-algorithms"
+abstract: >
+  An open-source library of deterministic, citation-backed clinical decision algorithms
+  for the most common primary care presenting complaints. Each implementation faithfully
+  reproduces a published scoring system or society guideline; every clinical threshold,
+  recommendation band, and population caveat is traceable to a primary source. The
+  software is for education, research, and discussion only; it is not a medical device.
+keywords:
+  - clinical decision support
+  - primary care
+  - evidence-based medicine
+  - clinical algorithms
+  - family medicine
+  - health informatics
+license: MIT
+version: 0.9.0
+date-released: "2026-06-02"
