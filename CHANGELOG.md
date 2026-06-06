@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.13.0] — 2026-06-06
+
+### Added
+- Thirteenth condition: **syncope (San Francisco Syncope Rule / CHESS)**.
+  - `sfsr_assessment(features)` — applies the five CHESS criteria and returns `high_risk` (True if any criterion present), the positive criteria, the risk band (low / high), a narrative disposition, and population caveats.
+  - `sfsr_positive_criteria(features)` returns the labels of the criteria present.
+  - Binary rule (no numeric score). The two measured criteria — hematocrit and systolic BP — are entered as raw values with the < 30% and < 90 mmHg thresholds applied internally; the other three are booleans. Out-of-range values raise `ValueError`.
+  - Caveats document the screening-not-discharge-guarantee nature, the non-cardiac exclusion, and the lower sensitivity reported in independent external validations.
+  - Sources: Quinn 2004 *Ann Emerg Med* (PMID 14747812, derivation), Quinn 2006 *Ann Emerg Med* (PMID 16631985, prospective validation), Sun 2007 *Ann Emerg Med* (PMID 17210201, external validation), Birnbaum 2008 *Ann Emerg Med* (PMID 18282636, failure to validate).
+- 22 new tests covering each CHESS criterion, the two threshold boundaries (hematocrit 30%, systolic BP 90), the all-negative low-risk case, multiple positive criteria, disposition and caveat content, and the validation guards. Total repo test count: 554.
+
+Closes #16.
+
 ## [0.12.0] — 2026-06-06
 
 ### Added
