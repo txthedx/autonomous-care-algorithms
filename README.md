@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Thirteen conditions are implemented (17 algorithm modules, 554 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Fourteen conditions are implemented (18 algorithm modules, 606 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -47,8 +47,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Upper GI bleeding (Glasgow-Blatchford) | [conditions/upper_gi_bleeding](conditions/upper_gi_bleeding) | Blatchford 2000; Stanley 2009, 2017; NICE CG141 | Implemented |
 | Appendicitis (Alvarado / MANTRELS) | [conditions/appendicitis](conditions/appendicitis) | Alvarado 1986; Ohle 2011 | Implemented |
 | Syncope (San Francisco Syncope Rule) | [conditions/syncope](conditions/syncope) | Quinn 2004, 2006; Sun 2007; Birnbaum 2008 | Implemented |
+| Chronic kidney disease (KDIGO staging) | [conditions/chronic_kidney_disease](conditions/chronic_kidney_disease) | KDIGO 2024; KDIGO 2012 | Implemented |
 
-The remaining 37 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, and the 4AT delirium screen.
+The remaining 36 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine and the 4AT delirium screen.
 
 ## Quick start
 
@@ -273,6 +274,20 @@ features = SfsrFeatures(
 )
 result = sfsr_assessment(features)
 print(result.high_risk, result.risk_band, result.positive_criteria)
+```
+
+Use the chronic kidney disease module (KDIGO staging; SI units):
+
+```python
+from conditions.chronic_kidney_disease import KdigoFeatures, kdigo_assessment
+
+features = KdigoFeatures(
+    egfr_ml_min_1_73m2=35.0,
+    acr_mg_per_mmol=12.0,
+    persistent_over_3_months=True,
+)
+result = kdigo_assessment(features)
+print(result.stage_label, result.risk_band, result.nephrology_referral_indicated)
 ```
 
 ## Contributing
