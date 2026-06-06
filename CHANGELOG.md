@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.10.0] — 2026-06-05
+
+### Added
+- Tenth condition: **chest pain (HEART score)**.
+  - `heart_assessment(features)` — total score (0–10), per-component breakdown, risk band (low 0–3 / moderate 4–6 / high 7–10), the approximate 6-week MACE estimate from the Backus 2013 validation cohort, a narrative disposition, and population caveats.
+  - `heart_score(features)` and `heart_component_scores(features)` for the raw total and the per-component (History, ECG, Age, Risk factors, Troponin) breakdown.
+  - The risk-factor component is derived from the six individual risk-factor booleans plus a `history_of_atherosclerotic_disease` flag, so the +2 atherosclerotic-disease override and the 0 / 1–2 / ≥3 count thresholds are applied in one auditable place. Negative `age_years` raises `ValueError`.
+  - Sources: Six 2008 *Neth Heart J* (PMID 18665203, derivation), Backus 2013 *Int J Cardiol* (PMID 23465250, validation and MACE rates), Mahler 2015 *Circ Cardiovasc Qual Outcomes* (PMID 25737484, HEART Pathway trial).
+- 41 new tests covering each component's point mapping, the age boundaries (44/45, 64/65), the risk-factor count thresholds and the atherosclerotic-disease override, every band boundary (3/4 and 6/7), disposition and caveat content, the component-sum invariant, and the negative-age guard. Total repo test count: 445.
+
+Closes #4.
+
 ## [0.9.0] — 2026-06-02
 
 ### Added
