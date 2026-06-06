@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "four_at": {
+        "label": "Delirium — 4AT rapid screen",
+        "module": "conditions.delirium", "fn": "four_at_assessment",
+        "folder": "delirium",
+        "blurb": "Rapid bedside delirium screen for older adults; score ≥4 flags possible delirium. Bellelli 2014.",
+        "params": [{"title": "4AT items", "dataclass": "FourATFeatures"}],
+    },
     "kdigo": {
         "label": "Chronic kidney disease — KDIGO staging",
         "module": "conditions.chronic_kidney_disease", "fn": "kdigo_assessment",
@@ -434,6 +441,8 @@ const PY_FILES = [
   "conditions/chronic_kidney_disease/kdigo_staging.py",
   "conditions/deep_vein_thrombosis/__init__.py",
   "conditions/deep_vein_thrombosis/wells_dvt.py",
+  "conditions/delirium/__init__.py",
+  "conditions/delirium/four_at.py",
   "conditions/knee_injury/__init__.py",
   "conditions/knee_injury/ottawa_knee_rule.py",
   "conditions/low_back_pain/__init__.py",

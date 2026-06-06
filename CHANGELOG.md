@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.15.0] — 2026-06-06
+
+### Added
+- Fifteenth condition: **delirium (4AT rapid screen)**.
+  - `four_at_assessment(features)` — total score (0–12), per-item breakdown, interpretation band (unlikely 0 / possible cognitive impairment 1–3 / possible delirium ≥4), a narrative action, and population caveats.
+  - `four_at_score(features)` and `four_at_component_scores(features)` for the raw total and the per-item (Alertness, AMT4, Attention, Acute change) breakdown.
+  - Items are entered as named response levels (a boolean for the acute-change item); items 1 and 4 score 0 or 4, items 2 and 3 score 0–2. The 3/4 cut-off is the pre-specified instrument design.
+  - Caveats state the 4AT is a screen, not a diagnostic test, and that a single application does not distinguish delirium from dementia.
+  - Sources: Bellelli 2014 *Age Ageing* (PMID 24590568, derivation and validation), Shenkin 2019 *BMC Med* (PMID 31337404, multicentre diagnostic accuracy).
+- 27 new tests covering each item at each level, the band boundaries (the 3/4 cut-off, and that alertness or acute change alone reaches "possible delirium"), the maximum score of 12, and the component-sum invariant. Total repo test count: 633.
+
+Closes #17.
+
 ## [0.14.0] — 2026-06-06
 
 ### Added

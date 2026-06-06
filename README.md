@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Fourteen conditions are implemented (18 algorithm modules, 606 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Fifteen conditions are implemented (19 algorithm modules, 633 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -48,8 +48,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Appendicitis (Alvarado / MANTRELS) | [conditions/appendicitis](conditions/appendicitis) | Alvarado 1986; Ohle 2011 | Implemented |
 | Syncope (San Francisco Syncope Rule) | [conditions/syncope](conditions/syncope) | Quinn 2004, 2006; Sun 2007; Birnbaum 2008 | Implemented |
 | Chronic kidney disease (KDIGO staging) | [conditions/chronic_kidney_disease](conditions/chronic_kidney_disease) | KDIGO 2024; KDIGO 2012 | Implemented |
+| Delirium (4AT screen) | [conditions/delirium](conditions/delirium) | Bellelli 2014; Shenkin 2019 | Implemented |
 
-The remaining 36 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine and the 4AT delirium screen.
+The remaining 35 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next high-priority published rule open as an individual issue: the NEXUS and Canadian C-Spine cervical-spine imaging rules.
 
 ## Quick start
 
@@ -288,6 +289,21 @@ features = KdigoFeatures(
 )
 result = kdigo_assessment(features)
 print(result.stage_label, result.risk_band, result.nephrology_referral_indicated)
+```
+
+Use the delirium module (4AT screen):
+
+```python
+from conditions.delirium import FourATFeatures, four_at_assessment
+
+features = FourATFeatures(
+    alertness="normal",
+    amt4="one_mistake",
+    attention_months_backwards="fewer_than_seven_or_refuses",
+    acute_change_or_fluctuating_course=True,
+)
+result = four_at_assessment(features)
+print(result.score, result.interpretation_band)
 ```
 
 ## Contributing
