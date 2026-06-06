@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Fifteen conditions are implemented (19 algorithm modules, 633 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Sixteen conditions are implemented (21 algorithm modules, 654 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -49,8 +49,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Syncope (San Francisco Syncope Rule) | [conditions/syncope](conditions/syncope) | Quinn 2004, 2006; Sun 2007; Birnbaum 2008 | Implemented |
 | Chronic kidney disease (KDIGO staging) | [conditions/chronic_kidney_disease](conditions/chronic_kidney_disease) | KDIGO 2024; KDIGO 2012 | Implemented |
 | Delirium (4AT screen) | [conditions/delirium](conditions/delirium) | Bellelli 2014; Shenkin 2019 | Implemented |
+| Cervical-spine trauma (NEXUS, Canadian C-Spine) | [conditions/cervical_spine_trauma](conditions/cervical_spine_trauma) | Hoffman 2000; Stiell 2001, 2003 | Implemented |
 
-The remaining 35 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next high-priority published rule open as an individual issue: the NEXUS and Canadian C-Spine cervical-spine imaging rules.
+The remaining 34 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9). Suggestions for the next high-priority rules are welcome — open an issue or see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -304,6 +305,29 @@ features = FourATFeatures(
 )
 result = four_at_assessment(features)
 print(result.score, result.interpretation_band)
+```
+
+Use the cervical-spine trauma module (NEXUS and the Canadian C-Spine Rule):
+
+```python
+from conditions.cervical_spine_trauma import (
+    CanadianCSpineFeatures,
+    canadian_c_spine_assessment,
+)
+
+features = CanadianCSpineFeatures(
+    age_65_or_older=False,
+    dangerous_mechanism=False,
+    paresthesias_in_extremities=False,
+    simple_rear_end_mvc=False,
+    sitting_position_in_ed=False,
+    ambulatory_at_any_time=True,
+    delayed_onset_of_neck_pain=False,
+    absence_of_midline_c_spine_tenderness=False,
+    able_to_rotate_neck_45_degrees=True,
+)
+result = canadian_c_spine_assessment(features)
+print(result.imaging_indicated, result.determining_step)
 ```
 
 ## Contributing
