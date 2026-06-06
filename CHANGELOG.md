@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.11.0] — 2026-06-06
+
+### Added
+- Eleventh condition: **upper gastrointestinal bleeding (Glasgow-Blatchford score)**.
+  - `glasgow_blatchford_assessment(features)` — total score (0–23), contributing factors, risk band (very low 0 / intermediate 1–5 / high ≥6), an explicit `outpatient_management_candidate` flag (score 0), a narrative disposition, and population caveats.
+  - `glasgow_blatchford_score(features)` and `glasgow_blatchford_components(features)` for the raw total and the per-component breakdown.
+  - Sex-specific hemoglobin bands; Canadian/SI units (urea mmol/L, hemoglobin g/L). Negative measured values raise `ValueError`.
+  - The score-0 outpatient threshold is the conservative default; caveats document the validated ≤ 1 threshold (Stanley 2017).
+  - Sources: Blatchford 2000 *Lancet* (PMID 11073021, derivation), Stanley 2009 *Lancet* (PMID 19091393, outpatient validation), Stanley 2017 *BMJ* (PMID 28053181, international comparison and ≤ 1 threshold), NICE CG141.
+- 52 new tests covering every urea, sex-specific hemoglobin, and systolic-BP band boundary, each binary marker, the band cutoffs (0/1 and 5/6), score-0 discharge eligibility, the maximum score of 23, and the negative-value guards. Total repo test count: 497.
+
+Closes #7.
+
 ## [0.10.0] — 2026-06-05
 
 ### Added

@@ -285,6 +285,13 @@ REGISTRY = {
         "blurb": "PE likely vs unlikely. Wells 2000/2001; ESC 2019.",
         "params": [{"title": "Clinical features", "dataclass": "WellsPeFeatures"}],
     },
+    "glasgow_blatchford": {
+        "label": "Upper GI bleeding — Glasgow-Blatchford score",
+        "module": "conditions.upper_gi_bleeding", "fn": "glasgow_blatchford_assessment",
+        "folder": "upper_gi_bleeding",
+        "blurb": "Need for intervention in upper GI bleeding; score 0 flags outpatient candidates. Blatchford 2000; Stanley 2017. SI units (urea mmol/L, Hb g/L).",
+        "params": [{"title": "Clinical and laboratory features", "dataclass": "GlasgowBlatchfordFeatures"}],
+    },
     "perc": {
         "label": "PE — PERC rule-out",
         "module": "conditions.pulmonary_embolism", "fn": "perc_assessment",
@@ -415,6 +422,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/upper_gi_bleeding/__init__.py",
+  "conditions/upper_gi_bleeding/glasgow_blatchford.py",
   "conditions/urinary_tract_infection/__init__.py",
   "conditions/urinary_tract_infection/assessment.py",
 ];
