@@ -10,7 +10,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Early-stage. The first implemented algorithm is **acute pharyngitis** (Centor / McIsaac scoring, IDSA 2012-aligned interpretation). The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Ten conditions are implemented (13 algorithm modules, 445 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -40,8 +40,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Acute knee injury | [conditions/knee_injury](conditions/knee_injury) | Stiell 1995, 1996; Bachmann 2004 | Implemented |
 | Deep vein thrombosis (Wells score) | [conditions/deep_vein_thrombosis](conditions/deep_vein_thrombosis) | Wells 1997; Wells 2003; Scarvelis 2006 | Implemented |
 | Pulmonary embolism (Wells PE + PERC) | [conditions/pulmonary_embolism](conditions/pulmonary_embolism) | Wells 2000, 2001; Kline 2004, 2008; ESC 2019 | Implemented |
+| Chest pain (HEART score) | [conditions/chest_pain](conditions/chest_pain) | Six 2008; Backus 2013; Mahler 2015 | Implemented |
 
-The remaining 41 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: HEART score, NEXUS / Canadian C-Spine, KDIGO CKD, and Glasgow-Blatchford UGI bleeding score.
+The remaining 40 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, Glasgow-Blatchford UGI bleeding score, and the Alvarado appendicitis score.
 
 ## Quick start
 
@@ -186,6 +187,28 @@ applicability = ApplicabilityFactors(
 )
 result = ottawa_ankle_assessment(features, applicability)
 print(result.imaging_indicated, result.indicating_criteria)
+```
+
+Use the chest pain module (HEART score for 6-week MACE risk):
+
+```python
+from conditions.chest_pain import HeartFeatures, heart_assessment
+
+features = HeartFeatures(
+    history="moderately_suspicious",
+    ecg="normal",
+    age_years=58,
+    hypertension=True,
+    hypercholesterolemia=True,
+    diabetes_mellitus=False,
+    current_or_recent_smoking=False,
+    family_history_of_cad=False,
+    obesity_bmi_over_30=False,
+    history_of_atherosclerotic_disease=False,
+    troponin="at_or_below_normal_limit",
+)
+result = heart_assessment(features)
+print(result.score, result.risk_band, result.recommended_disposition)
 ```
 
 ## Contributing
