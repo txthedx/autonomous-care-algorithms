@@ -5,12 +5,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![DOI-ready](https://img.shields.io/badge/cite-CITATION.cff-orange.svg)](CITATION.cff)
+[![Live demo](https://img.shields.io/badge/demo-try%20in%20browser-2da44e.svg)](https://txthedx.github.io/autonomous-care-algorithms/)
 
 Open-source, citation-backed clinical decision algorithms for the most common primary care presentations. Implementations follow published scoring systems and society guidelines, with every clinical rule traceable to a primary reference.
 
+> **▶ Try it in your browser:** [txthedx.github.io/autonomous-care-algorithms](https://txthedx.github.io/autonomous-care-algorithms/) — an interactive demo that runs the actual algorithm source via Pyodide (WebAssembly). No install, no server, and no data leaves your device.
+
 ## Status
 
-Active. Ten conditions are implemented (13 algorithm modules, 445 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Ten conditions are implemented (14 algorithm modules, 445 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
