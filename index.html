@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "sfsr": {
+        "label": "Syncope — San Francisco Syncope Rule (CHESS)",
+        "module": "conditions.syncope", "fn": "sfsr_assessment",
+        "folder": "syncope",
+        "blurb": "Screens syncope for short-term serious outcomes; any CHESS criterion flags high risk. Quinn 2004. Hematocrit as %.",
+        "params": [{"title": "CHESS criteria", "dataclass": "SfsrFeatures"}],
+    },
     "glasgow_blatchford": {
         "label": "Upper GI bleeding — Glasgow-Blatchford score",
         "module": "conditions.upper_gi_bleeding", "fn": "glasgow_blatchford_assessment",
@@ -431,6 +438,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/syncope/__init__.py",
+  "conditions/syncope/san_francisco_syncope_rule.py",
   "conditions/upper_gi_bleeding/__init__.py",
   "conditions/upper_gi_bleeding/glasgow_blatchford.py",
   "conditions/urinary_tract_infection/__init__.py",

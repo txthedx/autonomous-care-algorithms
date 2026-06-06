@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twelve conditions are implemented (16 algorithm modules, 532 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Thirteen conditions are implemented (17 algorithm modules, 554 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -46,8 +46,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Chest pain (HEART score) | [conditions/chest_pain](conditions/chest_pain) | Six 2008; Backus 2013; Mahler 2015 | Implemented |
 | Upper GI bleeding (Glasgow-Blatchford) | [conditions/upper_gi_bleeding](conditions/upper_gi_bleeding) | Blatchford 2000; Stanley 2009, 2017; NICE CG141 | Implemented |
 | Appendicitis (Alvarado / MANTRELS) | [conditions/appendicitis](conditions/appendicitis) | Alvarado 1986; Ohle 2011 | Implemented |
+| Syncope (San Francisco Syncope Rule) | [conditions/syncope](conditions/syncope) | Quinn 2004, 2006; Sun 2007; Birnbaum 2008 | Implemented |
 
-The remaining 38 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, the San Francisco Syncope Rule, and the 4AT delirium screen.
+The remaining 37 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, and the 4AT delirium screen.
 
 ## Quick start
 
@@ -256,6 +257,22 @@ features = AlvaradoFeatures(
 )
 result = alvarado_assessment(features)
 print(result.score, result.risk_band, result.recommended_disposition)
+```
+
+Use the syncope module (San Francisco Syncope Rule; CHESS):
+
+```python
+from conditions.syncope import SfsrFeatures, sfsr_assessment
+
+features = SfsrFeatures(
+    congestive_heart_failure_history=False,
+    hematocrit_percent=42.0,
+    abnormal_ecg=True,
+    shortness_of_breath=False,
+    systolic_bp_mmhg=128,
+)
+result = sfsr_assessment(features)
+print(result.high_risk, result.risk_band, result.positive_criteria)
 ```
 
 ## Contributing
