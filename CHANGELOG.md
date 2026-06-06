@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.12.0] — 2026-06-06
+
+### Added
+- Twelfth condition: **appendicitis (Alvarado score / MANTRELS)**.
+  - `alvarado_assessment(features)` — total score (0–10), contributing factors, risk band (low ≤4 / moderate 5–6 / high ≥7), a narrative disposition, and population caveats.
+  - `alvarado_score(features)` and `alvarado_components(features)` for the raw total and the per-component breakdown.
+  - The five clinical findings are booleans; temperature, white cell count, and neutrophil percentage are entered as raw values (°C, 10⁹/L, %) with the ≥37.3 °C, >10 ×10⁹/L, and >75% thresholds applied internally. Out-of-range values raise `ValueError`.
+  - Caveats note adult-predominant derivation (pediatric performance differs; Samuel 2002) and lower specificity in women of reproductive age.
+  - Sources: Alvarado 1986 *Ann Emerg Med* (PMID 3963537, derivation), Ohle 2011 *BMC Med* (PMID 22204638, systematic review), Samuel 2002 *J Pediatr Surg* (PMID 12037754, pediatric score).
+- 35 new tests covering each component's weight, the three threshold boundaries (37.3 °C, WBC 10.0, neutrophils 75%), the band cutoffs (4/5 and 6/7), the maximum score of 10, and the validation guards. Total repo test count: 532.
+
+Closes #15.
+
 ## [0.11.0] — 2026-06-06
 
 ### Added

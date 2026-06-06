@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Eleven conditions are implemented (15 algorithm modules, 497 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twelve conditions are implemented (16 algorithm modules, 532 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, and renal-track presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -45,8 +45,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Pulmonary embolism (Wells PE + PERC) | [conditions/pulmonary_embolism](conditions/pulmonary_embolism) | Wells 2000, 2001; Kline 2004, 2008; ESC 2019 | Implemented |
 | Chest pain (HEART score) | [conditions/chest_pain](conditions/chest_pain) | Six 2008; Backus 2013; Mahler 2015 | Implemented |
 | Upper GI bleeding (Glasgow-Blatchford) | [conditions/upper_gi_bleeding](conditions/upper_gi_bleeding) | Blatchford 2000; Stanley 2009, 2017; NICE CG141 | Implemented |
+| Appendicitis (Alvarado / MANTRELS) | [conditions/appendicitis](conditions/appendicitis) | Alvarado 1986; Ohle 2011 | Implemented |
 
-The remaining 39 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, the Alvarado appendicitis score, and the San Francisco Syncope Rule.
+The remaining 38 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with individual issues open for the next high-priority published rules: NEXUS / Canadian C-Spine, KDIGO CKD, the San Francisco Syncope Rule, and the 4AT delirium screen.
 
 ## Quick start
 
@@ -236,6 +237,25 @@ features = GlasgowBlatchfordFeatures(
 )
 result = glasgow_blatchford_assessment(features)
 print(result.score, result.risk_band, result.outpatient_management_candidate)
+```
+
+Use the appendicitis module (Alvarado score; SI units):
+
+```python
+from conditions.appendicitis import AlvaradoFeatures, alvarado_assessment
+
+features = AlvaradoFeatures(
+    migration_of_pain_to_rlq=True,
+    anorexia=True,
+    nausea_or_vomiting=True,
+    tenderness_in_rlq=True,
+    rebound_tenderness=False,
+    temperature_celsius=37.6,
+    white_cell_count_x10e9_per_l=12.5,
+    neutrophil_percent=80.0,
+)
+result = alvarado_assessment(features)
+print(result.score, result.risk_band, result.recommended_disposition)
 ```
 
 ## Contributing
