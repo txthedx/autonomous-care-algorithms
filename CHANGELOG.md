@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.14.0] — 2026-06-06
+
+### Added
+- Fourteenth condition: **chronic kidney disease (KDIGO GFR and albuminuria staging)**.
+  - `kdigo_assessment(features)` — GFR category (G1–G5), albuminuria category (A1–A3), combined stage label (e.g. `G3bA2`), risk band (low / moderately increased / high / very high) and heat-map colour, a monitoring recommendation, and whether nephrology referral is indicated (G4, G5, or A3).
+  - `kdigo_gfr_category()`, `kdigo_albuminuria_category()`, and `kdigo_risk_band()` expose the individual category and heat-map lookups.
+  - Takes eGFR (mL/min/1.73 m²) and ACR (mg/mmol, Canadian/SI units) as raw values, plus an explicit `persistent_over_3_months` chronicity flag; staging categories are still reported when chronicity is unconfirmed, but the disposition flags that CKD cannot yet be diagnosed. Negative values raise `ValueError`.
+  - The 18-cell risk heat map is encoded explicitly so each combination is directly testable.
+  - Sources: KDIGO 2024 *Kidney Int* (105(4S):S117–S314), KDIGO 2012 *Kidney Int Suppl* (3:1–150).
+- 52 new tests covering every GFR and albuminuria category boundary, the full 18-cell heat map, referral logic, the chronicity flag, and the validation guards. Total repo test count: 606.
+
+Closes #6.
+
 ## [0.13.0] — 2026-06-06
 
 ### Added

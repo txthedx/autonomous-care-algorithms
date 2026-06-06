@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "kdigo": {
+        "label": "Chronic kidney disease — KDIGO staging",
+        "module": "conditions.chronic_kidney_disease", "fn": "kdigo_assessment",
+        "folder": "chronic_kidney_disease",
+        "blurb": "Stages CKD by GFR and albuminuria into the KDIGO risk heat map. KDIGO 2024. ACR in mg/mmol; eGFR supplied (not estimated here).",
+        "params": [{"title": "GFR, albuminuria, and chronicity", "dataclass": "KdigoFeatures"}],
+    },
     "sfsr": {
         "label": "Syncope — San Francisco Syncope Rule (CHESS)",
         "module": "conditions.syncope", "fn": "sfsr_assessment",
@@ -423,6 +430,8 @@ const PY_FILES = [
   "conditions/atrial_fibrillation/has_bled.py",
   "conditions/chest_pain/__init__.py",
   "conditions/chest_pain/heart_score.py",
+  "conditions/chronic_kidney_disease/__init__.py",
+  "conditions/chronic_kidney_disease/kdigo_staging.py",
   "conditions/deep_vein_thrombosis/__init__.py",
   "conditions/deep_vein_thrombosis/wells_dvt.py",
   "conditions/knee_injury/__init__.py",
