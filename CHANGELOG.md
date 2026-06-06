@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.16.0] — 2026-06-06
+
+### Added
+- Sixteenth condition: **cervical-spine trauma (NEXUS low-risk criteria and the Canadian C-Spine Rule)**, implemented as two separate functions.
+  - `nexus_assessment(features)` — the five NEXUS low-risk criteria (Hoffman 2000); imaging is indicated unless all five are satisfied. Returns the criteria present, a disposition, and caveats.
+  - `canadian_c_spine_assessment(features)` — the three-step Canadian C-Spine Rule (Stiell 2001): high-risk factors (age ≥65, dangerous mechanism, extremity paresthesias) → image; otherwise a low-risk factor must be present to assess range of motion; otherwise → image; otherwise able to rotate the neck 45° left and right → no imaging. Returns the determining step, the high- and low-risk factors present, and whether rotation was assessed.
+  - Caveats explicitly exclude penetrating trauma, GCS < 15, and (for the Canadian rule) patients under 16, and note weaker pediatric evidence for NEXUS.
+  - Sources: Hoffman 2000 *N Engl J Med* (PMID 10891516), Stiell 2001 *JAMA* (PMID 11597285), Stiell 2003 *N Engl J Med* (PMID 14695411, head-to-head comparison showing the Canadian rule generally outperforms NEXUS).
+- 21 new tests covering each NEXUS criterion, every Canadian C-Spine branch and step boundary, step precedence (high-risk overrides low-risk and rotation), that rotation is assessed only at step 3, and the output shape. Total repo test count: 654.
+
+Closes #5.
+
 ## [0.15.0] — 2026-06-06
 
 ### Added
