@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>autonomous-care-algorithms — interactive demo</title>
+<meta name="description" content="Try the open-source, citation-backed clinical decision algorithms in your browser. Runs the actual Python source via Pyodide — no server, no data leaves your device." />
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --card: #ffffff;
+    --ink: #1f2328;
+    --muted: #57606a;
+    --line: #d0d7de;
+    --accent: #0969da;
+    --accent-weak: #ddf4ff;
+    --green: #1a7f37;
+    --green-bg: #dafbe1;
+    --amber: #9a6700;
+    --amber-bg: #fff8c5;
+    --red: #cf222e;
+    --red-bg: #ffebe9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  header {
+    background: #0d1117;
+    color: #e6edf3;
+    padding: 28px 20px 24px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+  header .wrap { padding: 0 20px; }
+  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: #9da7b3; font-size: 14px; }
+  header a { color: #79c0ff; text-decoration: none; }
+  header a:hover { text-decoration: underline; }
+  .disclaimer {
+    background: var(--amber-bg);
+    color: #533f03;
+    border-bottom: 1px solid #eac54f;
+    font-size: 13px;
+    padding: 10px 0;
+  }
+  main { padding: 24px 0 64px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  label.lbl { display: block; font-weight: 600; font-size: 13px; margin: 0 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  select.picker, input[type="number"], input[type="text"], select.enum {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font: inherit;
+    background: #fff;
+    color: var(--ink);
+  }
+  select.picker { font-size: 16px; }
+  .blurb { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
+  .group-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 18px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+  @media (max-width: 620px) { .fields { grid-template-columns: 1fr; } }
+  .field { min-width: 0; }
+  .field.bool { display: flex; align-items: flex-start; gap: 9px; background: #f6f8fa; border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; }
+  .field.bool input { margin-top: 2px; width: 16px; height: 16px; flex: 0 0 auto; }
+  .field.bool label { font-weight: 500; font-size: 14px; cursor: pointer; }
+  .field .flbl { display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px; }
+  button.run {
+    margin-top: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: 11px 20px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.run:disabled { opacity: .55; cursor: progress; }
+  button.run:hover:not(:disabled) { background: #0860ca; }
+  #status { font-size: 13px; color: var(--muted); margin-left: 12px; }
+  .result-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .score-big { font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .score-lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .chip { display: inline-block; padding: 5px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+  .chip.green { background: var(--green-bg); color: var(--green); }
+  .chip.amber { background: var(--amber-bg); color: var(--amber); }
+  .chip.red { background: var(--red-bg); color: var(--red); }
+  .chip.neutral { background: #eaeef2; color: var(--muted); }
+  .callout { background: var(--accent-weak); border: 1px solid #b6e3ff; border-radius: 8px; padding: 12px 14px; margin: 12px 0; }
+  .callout .k { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+  table.kv { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  table.kv td { padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+  table.kv td.k { color: var(--muted); width: 45%; }
+  .sublist { margin: 6px 0 10px; }
+  .sublist .k { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; margin: 12px 0 4px; }
+  .sublist ul { margin: 0; padding-left: 20px; }
+  .sublist li { margin: 2px 0; }
+  .err { background: var(--red-bg); border: 1px solid #ff8182; color: #82071e; padding: 12px 14px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .components { background: #f6f8fa; border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px 10px; margin: 10px 0; }
+  footer { color: var(--muted); font-size: 13px; padding: 20px 0 40px; text-align: center; }
+  footer a { color: var(--accent); text-decoration: none; }
+  code { background: #eff1f3; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  .srclink { font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>autonomous-care-algorithms</h1>
+    <p>Interactive demo · open-source, citation-backed clinical decision algorithms ·
+       <a href="https://github.com/txthedx/autonomous-care-algorithms">source on GitHub</a></p>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <div class="wrap">
+    <strong>Not a medical device.</strong> This runs the published algorithms for education and discussion only — it does not provide medical advice, diagnosis, or treatment. Everything executes locally in your browser; no data is sent anywhere. See the
+    <a href="https://github.com/txthedx/autonomous-care-algorithms/blob/main/DISCLAIMER.md">full disclaimer</a>.
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="card">
+      <label class="lbl" for="picker">Choose an algorithm</label>
+      <select class="picker" id="picker" disabled>
+        <option>Loading Python runtime…</option>
+      </select>
+      <p class="blurb" id="blurb"></p>
+      <p class="srclink" id="srclink"></p>
+    </div>
+
+    <div class="card" id="formCard" style="display:none">
+      <form id="form" onsubmit="return false">
+        <div id="formBody"></div>
+        <button class="run" id="runBtn" type="submit">Calculate</button>
+        <span id="status"></span>
+      </form>
+    </div>
+
+    <div class="card" id="resultCard" style="display:none">
+      <div id="resultBody"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Runs the real Python source via <a href="https://pyodide.org">Pyodide</a> (WebAssembly). No backend.
+  · <a href="https://github.com/txthedx/autonomous-care-algorithms">Repository</a>
+  · <a href="https://github.com/txthedx/autonomous-care-algorithms/issues">Issues &amp; roadmap</a>
+</footer>
+
+<!-- Python harness: registry + introspection-driven describe()/evaluate(). -->
+<script id="pyharness" type="text/plain">
+import json, importlib, dataclasses, typing
+from typing import get_origin, get_args, Literal
+
+# Each entry maps a condition to its module, function, and ordered parameters.
+# A param is either a dataclass (fields are introspected) or a list of scalars.
+REGISTRY = {
+    "heart": {
+        "label": "Chest pain — HEART score",
+        "module": "conditions.chest_pain", "fn": "heart_assessment",
+        "folder": "chest_pain",
+        "blurb": "6-week major-adverse-cardiac-event risk for ED chest pain. Six 2008; validated Backus 2013.",
+        "params": [{"title": "Clinical features", "dataclass": "HeartFeatures"}],
+    },
+    "cha2ds2_vasc": {
+        "label": "Atrial fibrillation — CHA₂DS₂-VASc (stroke risk)",
+        "module": "conditions.atrial_fibrillation", "fn": "cha2ds2_vasc_assessment",
+        "folder": "atrial_fibrillation",
+        "blurb": "Stroke risk and anticoagulation guidance in non-valvular AF. Lip 2010; ESC 2020.",
+        "params": [{"title": "Clinical features", "dataclass": "Cha2ds2VascFeatures"}],
+    },
+    "has_bled": {
+        "label": "Atrial fibrillation — HAS-BLED (bleeding risk)",
+        "module": "conditions.atrial_fibrillation", "fn": "has_bled_assessment",
+        "folder": "atrial_fibrillation",
+        "blurb": "Major-bleeding risk on anticoagulation. Pisters 2010.",
+        "params": [{"title": "Clinical features", "dataclass": "HasBledFeatures"}],
+    },
+    "crb_65": {
+        "label": "Pneumonia — CRB-65 (primary-care severity)",
+        "module": "conditions.pneumonia", "fn": "crb_65_assessment",
+        "folder": "pneumonia",
+        "blurb": "Community-acquired pneumonia severity without labs. Lim 2003; NICE NG138.",
+        "params": [{"title": "Clinical features", "dataclass": "Crb65Features"}],
+    },
+    "curb_65": {
+        "label": "Pneumonia — CURB-65 (with urea)",
+        "module": "conditions.pneumonia", "fn": "curb_65_assessment",
+        "folder": "pneumonia",
+        "blurb": "Community-acquired pneumonia severity including urea. Lim 2003; BTS 2009.",
+        "params": [{"title": "Clinical features", "dataclass": "Curb65Features"}],
+    },
+    "pharyngitis": {
+        "label": "Sore throat — McIsaac / Centor score",
+        "module": "conditions.pharyngitis", "fn": "mcisaac_recommendation",
+        "folder": "pharyngitis",
+        "blurb": "Likelihood of group A strep and testing/treatment guidance. McIsaac 1998/2004; IDSA 2012.",
+        "params": [{"title": "Clinical features", "dataclass": "PharyngitisFeatures"}],
+    },
+    "uti": {
+        "label": "UTI in women — Bent 2002 decision rule",
+        "module": "conditions.urinary_tract_infection", "fn": "uti_assessment",
+        "folder": "urinary_tract_infection",
+        "blurb": "Pretest probability of acute uncomplicated cystitis, with a complicating-factor gate. Bent 2002.",
+        "params": [
+            {"title": "Presenting symptoms", "dataclass": "UtiPresentingFeatures"},
+            {"title": "Complicating factors", "dataclass": "UtiComplicatingFactors"},
+        ],
+    },
+    "start_back": {
+        "label": "Low back pain — STarT Back stratification",
+        "module": "conditions.low_back_pain", "fn": "start_back_stratification",
+        "folder": "low_back_pain",
+        "blurb": "Risk of persistent disabling back pain to target management. Hill 2008/2011.",
+        "params": [{"title": "STarT Back questionnaire", "dataclass": "StartBackResponses"}],
+    },
+    "lbp_red_flags": {
+        "label": "Low back pain — red-flag screen",
+        "module": "conditions.low_back_pain", "fn": "red_flag_assessment",
+        "folder": "low_back_pain",
+        "blurb": "Screen for serious spinal pathology. Downie 2013; NICE NG59.",
+        "params": [{"title": "Red-flag features", "dataclass": "RedFlagFeatures"}],
+    },
+    "ottawa_ankle": {
+        "label": "Ankle injury — Ottawa Ankle Rule",
+        "module": "conditions.ankle_injury", "fn": "ottawa_ankle_assessment",
+        "folder": "ankle_injury",
+        "blurb": "Whether ankle X-ray is indicated. Stiell 1992/1993.",
+        "params": [
+            {"title": "Examination findings", "dataclass": "AnkleAssessmentFeatures"},
+            {"title": "Applicability (exclusions)", "dataclass": "ApplicabilityFactors"},
+        ],
+    },
+    "ottawa_foot": {
+        "label": "Midfoot injury — Ottawa Foot Rule",
+        "module": "conditions.ankle_injury", "fn": "ottawa_foot_assessment",
+        "folder": "ankle_injury",
+        "blurb": "Whether foot X-ray is indicated. Stiell 1992/1993.",
+        "params": [
+            {"title": "Examination findings", "dataclass": "FootAssessmentFeatures"},
+            {"title": "Applicability (exclusions)", "dataclass": "ApplicabilityFactors"},
+        ],
+    },
+    "ottawa_knee": {
+        "label": "Knee injury — Ottawa Knee Rule",
+        "module": "conditions.knee_injury", "fn": "ottawa_knee_assessment",
+        "folder": "knee_injury",
+        "blurb": "Whether knee X-ray is indicated. Stiell 1995/1996.",
+        "params": [
+            {"title": "Examination findings", "dataclass": "OttawaKneeFeatures"},
+            {"title": "Applicability (exclusions)", "dataclass": "ApplicabilityFactors"},
+        ],
+    },
+    "wells_dvt_2t": {
+        "label": "DVT — Wells score (two-tier)",
+        "module": "conditions.deep_vein_thrombosis", "fn": "wells_dvt_two_tier",
+        "folder": "deep_vein_thrombosis",
+        "blurb": "DVT likely vs unlikely (modified Wells 2003).",
+        "params": [{"title": "Clinical features", "dataclass": "WellsDvtFeatures"}],
+    },
+    "wells_dvt_3t": {
+        "label": "DVT — Wells score (three-tier)",
+        "module": "conditions.deep_vein_thrombosis", "fn": "wells_dvt_three_tier",
+        "folder": "deep_vein_thrombosis",
+        "blurb": "Low / moderate / high pretest probability (original Wells 1997).",
+        "params": [{"title": "Clinical features", "dataclass": "WellsDvtFeatures"}],
+    },
+    "wells_pe_2t": {
+        "label": "PE — Wells score (two-tier)",
+        "module": "conditions.pulmonary_embolism", "fn": "wells_pe_two_tier",
+        "folder": "pulmonary_embolism",
+        "blurb": "PE likely vs unlikely. Wells 2000/2001; ESC 2019.",
+        "params": [{"title": "Clinical features", "dataclass": "WellsPeFeatures"}],
+    },
+    "perc": {
+        "label": "PE — PERC rule-out",
+        "module": "conditions.pulmonary_embolism", "fn": "perc_assessment",
+        "folder": "pulmonary_embolism",
+        "blurb": "Rules out PE in low-probability patients. Kline 2004/2008. Requires low pretest probability.",
+        "params": [
+            {"title": "PERC criteria (each is the positive finding)", "dataclass": "PercFeatures"},
+            {"title": "Applicability", "scalars": [
+                {"name": "pretest_probability_is_low", "type": "bool",
+                 "label": "Pretest probability is low (required to apply PERC)"}
+            ]},
+        ],
+    },
+}
+
+
+def _field_kind(th):
+    if th is bool:
+        return ("bool", None)
+    if th is int:
+        return ("int", None)
+    if th is float:
+        return ("number", None)
+    if get_origin(th) is Literal:
+        return ("enum", list(get_args(th)))
+    return ("text", None)
+
+
+def _scalar_kind(t):
+    return {"bool": "bool", "int": "int", "float": "number"}.get(t, "text")
+
+
+def conditions():
+    return json.dumps([{"key": k, "label": v["label"]} for k, v in REGISTRY.items()])
+
+
+def describe(key):
+    spec = REGISTRY[key]
+    mod = importlib.import_module(spec["module"])
+    groups = []
+    for gi, p in enumerate(spec["params"]):
+        fields = []
+        if "dataclass" in p:
+            cls = getattr(mod, p["dataclass"])
+            hints = typing.get_type_hints(cls)
+            for f in dataclasses.fields(cls):
+                kind, options = _field_kind(hints[f.name])
+                fields.append({"id": "%d.%s" % (gi, f.name), "name": f.name,
+                               "kind": kind, "options": options, "label": None})
+        else:
+            for s in p["scalars"]:
+                fields.append({"id": "%d.%s" % (gi, s["name"]), "name": s["name"],
+                               "kind": _scalar_kind(s["type"]),
+                               "options": s.get("options"), "label": s.get("label")})
+        groups.append({"title": p["title"], "fields": fields})
+    return json.dumps({"label": spec["label"], "blurb": spec.get("blurb", ""),
+                       "folder": spec.get("folder", ""), "groups": groups})
+
+
+def _coerce(kind, val):
+    if kind == "bool":
+        return bool(val)
+    if kind == "int":
+        return 0 if val in (None, "") else int(float(val))
+    if kind == "number":
+        return 0.0 if val in (None, "") else float(val)
+    return val
+
+
+def _jsonable(o):
+    if dataclasses.is_dataclass(o) and not isinstance(o, type):
+        return {f.name: _jsonable(getattr(o, f.name)) for f in dataclasses.fields(o)}
+    if isinstance(o, (list, tuple)):
+        return [_jsonable(x) for x in o]
+    if isinstance(o, dict):
+        return {k: _jsonable(v) for k, v in o.items()}
+    return o
+
+
+def evaluate(key, values_json):
+    try:
+        spec = REGISTRY[key]
+        values = json.loads(values_json)
+        mod = importlib.import_module(spec["module"])
+        args = []
+        for gi, p in enumerate(spec["params"]):
+            if "dataclass" in p:
+                cls = getattr(mod, p["dataclass"])
+                hints = typing.get_type_hints(cls)
+                kwargs = {}
+                for f in dataclasses.fields(cls):
+                    kind, _ = _field_kind(hints[f.name])
+                    kwargs[f.name] = _coerce(kind, values.get("%d.%s" % (gi, f.name)))
+                args.append(cls(**kwargs))
+            else:
+                for s in p["scalars"]:
+                    args.append(_coerce(_scalar_kind(s["type"]),
+                                        values.get("%d.%s" % (gi, s["name"]))))
+        result = getattr(mod, spec["fn"])(*args)
+        return json.dumps({"ok": True, "result": _jsonable(result)})
+    except Exception as e:
+        return json.dumps({"ok": False, "error": type(e).__name__ + ": " + str(e)})
+</script>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+const PY_FILES = [
+  "conditions/__init__.py",
+  "conditions/ankle_injury/__init__.py",
+  "conditions/ankle_injury/ottawa_rules.py",
+  "conditions/atrial_fibrillation/__init__.py",
+  "conditions/atrial_fibrillation/cha2ds2_vasc.py",
+  "conditions/atrial_fibrillation/has_bled.py",
+  "conditions/chest_pain/__init__.py",
+  "conditions/chest_pain/heart_score.py",
+  "conditions/deep_vein_thrombosis/__init__.py",
+  "conditions/deep_vein_thrombosis/wells_dvt.py",
+  "conditions/knee_injury/__init__.py",
+  "conditions/knee_injury/ottawa_knee_rule.py",
+  "conditions/low_back_pain/__init__.py",
+  "conditions/low_back_pain/red_flags.py",
+  "conditions/low_back_pain/start_back.py",
+  "conditions/pharyngitis/__init__.py",
+  "conditions/pharyngitis/score.py",
+  "conditions/pneumonia/__init__.py",
+  "conditions/pneumonia/crb_65.py",
+  "conditions/pneumonia/curb_65.py",
+  "conditions/pulmonary_embolism/__init__.py",
+  "conditions/pulmonary_embolism/perc.py",
+  "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/urinary_tract_infection/__init__.py",
+  "conditions/urinary_tract_infection/assessment.py",
+];
+const REPO = "https://github.com/txthedx/autonomous-care-algorithms/tree/main/conditions/";
+const BASE = new URL(".", document.baseURI).href;
+
+let pyodide = null;
+
+function titleCase(s) {
+  return s.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+function prettyVal(v) {
+  if (typeof v === "boolean") return v ? "Yes" : "No";
+  if (typeof v === "string") return titleCase(v);
+  return String(v);
+}
+function bandClass(s) {
+  const t = String(s).toLowerCase();
+  if (/(^|[^a-z])(low|unlikely|excluded|negative|not indicated|none)([^a-z]|$)/.test(t)) return "green";
+  if (/(moderate|intermediate)/.test(t)) return "amber";
+  if (/(high|likely|indicated|positive|severe)/.test(t)) return "red";
+  return "neutral";
+}
+
+async function boot() {
+  const picker = document.getElementById("picker");
+  try {
+    pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/" });
+    // Fetch the real package source and write it into the in-browser filesystem.
+    pyodide.FS.mkdirTree("/lib");
+    await Promise.all(PY_FILES.map(async (rel) => {
+      const res = await fetch(BASE + rel);
+      if (!res.ok) throw new Error("fetch failed: " + rel + " (" + res.status + ")");
+      const text = await res.text();
+      const full = "/lib/" + rel;
+      pyodide.FS.mkdirTree(full.slice(0, full.lastIndexOf("/")));
+      pyodide.FS.writeFile(full, text);
+    }));
+    pyodide.runPython("import sys; sys.path.insert(0, '/lib')");
+    pyodide.runPython(document.getElementById("pyharness").textContent);
+
+    const list = JSON.parse(pyodide.runPython("conditions()"));
+    picker.innerHTML = "";
+    list.forEach(c => {
+      const o = document.createElement("option");
+      o.value = c.key; o.textContent = c.label;
+      picker.appendChild(o);
+    });
+    picker.disabled = false;
+    picker.addEventListener("change", () => renderForm(picker.value));
+    renderForm(picker.value);
+  } catch (e) {
+    picker.innerHTML = "<option>Failed to load</option>";
+    document.getElementById("blurb").innerHTML =
+      '<span class="err">Could not start the Python runtime: ' + e.message + "</span>";
+  }
+}
+
+function renderForm(key) {
+  const spec = JSON.parse(pyodide.runPython("describe('" + key + "')"));
+  document.getElementById("blurb").textContent = spec.blurb;
+  document.getElementById("srclink").innerHTML =
+    'Source: <a href="' + REPO + spec.folder + '">conditions/' + spec.folder + "</a>";
+  const body = document.getElementById("formBody");
+  body.innerHTML = "";
+  spec.groups.forEach(g => {
+    const h = document.createElement("div");
+    h.className = "group-title"; h.textContent = g.title;
+    body.appendChild(h);
+    const grid = document.createElement("div");
+    grid.className = "fields";
+    g.fields.forEach(f => grid.appendChild(renderField(f)));
+    body.appendChild(grid);
+  });
+  document.getElementById("formCard").style.display = "";
+  document.getElementById("resultCard").style.display = "none";
+  document.getElementById("status").textContent = "";
+}
+
+function renderField(f) {
+  const wrap = document.createElement("div");
+  const label = f.label || titleCase(f.name);
+  if (f.kind === "bool") {
+    wrap.className = "field bool";
+    const id = "f_" + f.id.replace(/\W/g, "_");
+    wrap.innerHTML =
+      '<input type="checkbox" id="' + id + '" data-id="' + f.id + '" data-kind="bool">' +
+      '<label for="' + id + '">' + label + "</label>";
+  } else if (f.kind === "enum") {
+    wrap.className = "field";
+    let opts = (f.options || []).map(o =>
+      '<option value="' + o + '">' + titleCase(o) + "</option>").join("");
+    wrap.innerHTML =
+      '<span class="flbl">' + label + "</span>" +
+      '<select class="enum" data-id="' + f.id + '" data-kind="enum">' + opts + "</select>";
+  } else {
+    wrap.className = "field";
+    const step = f.kind === "number" ? "any" : "1";
+    wrap.innerHTML =
+      '<span class="flbl">' + label + "</span>" +
+      '<input type="number" step="' + step + '" data-id="' + f.id +
+      '" data-kind="' + f.kind + '" placeholder="0">';
+  }
+  return wrap;
+}
+
+function collect() {
+  const values = {};
+  document.querySelectorAll("[data-id]").forEach(el => {
+    const id = el.getAttribute("data-id");
+    const kind = el.getAttribute("data-kind");
+    if (kind === "bool") values[id] = el.checked;
+    else if (kind === "int" || kind === "number") values[id] = el.value === "" ? null : el.value;
+    else values[id] = el.value;
+  });
+  return values;
+}
+
+function run() {
+  const key = document.getElementById("picker").value;
+  const valuesJson = JSON.stringify(collect());
+  pyodide.globals.set("_vals", valuesJson);
+  const out = JSON.parse(pyodide.runPython("evaluate('" + key + "', _vals)"));
+  renderResult(out);
+}
+
+function renderResult(out) {
+  const card = document.getElementById("resultCard");
+  const body = document.getElementById("resultBody");
+  card.style.display = "";
+  if (!out.ok) {
+    body.innerHTML = '<div class="err">' + out.error + "</div>";
+    card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return;
+  }
+  const r = out.result;
+  let html = "";
+
+  // Headline: score + any *_band / boolean disposition flags.
+  const head = [];
+  if ("score" in r && typeof r.score !== "object") {
+    head.push('<div><div class="score-big">' + r.score + '</div><div class="score-lbl">Score</div></div>');
+  }
+  Object.keys(r).forEach(k => {
+    if (/band$/.test(k) && typeof r[k] === "string") {
+      head.push('<span class="chip ' + bandClass(r[k]) + '">' + titleCase(r[k]) + "</span>");
+    }
+  });
+  ["pe_ruled_out", "imaging_indicated", "applies", "rule_applies"].forEach(k => {
+    if (k in r && typeof r[k] === "boolean") {
+      const cls = (k === "pe_ruled_out") ? (r[k] ? "green" : "amber")
+                : (r[k] ? "red" : "green");
+      head.push('<span class="chip ' + cls + '">' + titleCase(k) + ": " + (r[k] ? "Yes" : "No") + "</span>");
+    }
+  });
+  if (head.length) html += '<div class="result-head">' + head.join("") + "</div>";
+
+  // Recommendation callouts.
+  Object.keys(r).forEach(k => {
+    if ((/^recommended/.test(k) || k === "action" || k === "recommended_action") &&
+        typeof r[k] === "string" && r[k]) {
+      html += '<div class="callout"><div class="k">' + titleCase(k) + "</div>" + r[k] + "</div>";
+    }
+  });
+
+  // Nested component breakdowns (e.g. HEART components).
+  Object.keys(r).forEach(k => {
+    const v = r[k];
+    if (v && typeof v === "object" && !Array.isArray(v)) {
+      html += '<div class="components"><div class="group-title">' + titleCase(k) + "</div><table class='kv'>";
+      Object.keys(v).forEach(kk => {
+        html += "<tr><td class='k'>" + titleCase(kk) + "</td><td>" + prettyVal(v[kk]) + "</td></tr>";
+      });
+      html += "</table></div>";
+    }
+  });
+
+  // Scalar leftovers in a table.
+  let rows = "";
+  Object.keys(r).forEach(k => {
+    const v = r[k];
+    if (typeof v === "object") return;
+    if (k === "score" || /band$/.test(k) || /^recommended/.test(k) || k === "action") return;
+    if (["pe_ruled_out", "imaging_indicated", "applies", "rule_applies"].includes(k)) return;
+    rows += "<tr><td class='k'>" + titleCase(k) + "</td><td>" + prettyVal(v) + "</td></tr>";
+  });
+  if (rows) html += "<table class='kv'>" + rows + "</table>";
+
+  // Arrays: citations, caveats, criteria lists.
+  Object.keys(r).forEach(k => {
+    const v = r[k];
+    if (Array.isArray(v) && v.length) {
+      html += '<div class="sublist"><div class="k">' + titleCase(k) + "</div><ul>" +
+        v.map(x => "<li>" + (typeof x === "object" ? JSON.stringify(x) : prettyVal(x)) + "</li>").join("") +
+        "</ul></div>";
+    }
+  });
+
+  body.innerHTML = html;
+  card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+document.getElementById("form").addEventListener("submit", run);
+boot();
+</script>
+</body>
+</html>
