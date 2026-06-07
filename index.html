@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "canadian_ct_head": {
+        "label": "Head injury — Canadian CT Head Rule",
+        "module": "conditions.head_injury", "fn": "canadian_ct_head_assessment",
+        "folder": "head_injury",
+        "blurb": "Which adults with minor head injury need a CT. CT indicated if any high- or medium-risk factor present. Stiell 2001.",
+        "params": [{"title": "High-risk and medium-risk factors", "dataclass": "CanadianCtHeadFeatures"}],
+    },
     "nexus": {
         "label": "Cervical spine — NEXUS low-risk criteria",
         "module": "conditions.cervical_spine_trauma", "fn": "nexus_assessment",
@@ -458,6 +465,8 @@ const PY_FILES = [
   "conditions/chronic_kidney_disease/kdigo_staging.py",
   "conditions/deep_vein_thrombosis/__init__.py",
   "conditions/deep_vein_thrombosis/wells_dvt.py",
+  "conditions/head_injury/__init__.py",
+  "conditions/head_injury/canadian_ct_head.py",
   "conditions/delirium/__init__.py",
   "conditions/delirium/four_at.py",
   "conditions/knee_injury/__init__.py",
