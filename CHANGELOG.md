@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.17.0] — 2026-06-07
+
+### Added
+- Seventeenth condition: **head injury (Canadian CT Head Rule)**.
+  - `canadian_ct_head_assessment(features)` — returns whether CT is indicated (any of seven factors present), the high-risk factors present (predicting need for neurosurgical intervention) and medium-risk factors present (predicting clinically important brain injury), a disposition reflecting the triggering tier, and inclusion/exclusion caveats.
+  - Five high-risk factors (GCS < 15 at 2 h, suspected open/depressed skull fracture, basal skull fracture sign, vomiting ≥2, age ≥65) and two medium-risk factors (retrograde amnesia ≥30 min, dangerous mechanism).
+  - Caveats state the inclusion criteria (minor head injury, GCS 13–15, within 24 h) and the exclusions (age <16, anticoagulation/bleeding disorder, GCS <13, non-traumatic, post-traumatic seizure, focal deficit, unstable vitals, pregnancy).
+  - Sources: Stiell 2001 *Lancet* (PMID 11356436, derivation), Stiell 2005 *JAMA* (PMID 16189364, comparison with the New Orleans Criteria).
+- 12 new tests covering each of the seven factors, the high- vs medium-risk tier reporting and precedence, the no-factor case, and the output shape. Total repo test count: 666.
+
+Closes #26.
+
 ## [0.16.0] — 2026-06-06
 
 ### Added

@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Sixteen conditions are implemented (21 algorithm modules, 654 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Seventeen conditions are implemented (22 algorithm modules, 666 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 > **Important: This is not a medical device.** This software does not provide medical advice, diagnosis, or treatment. It is provided for research, education, and discussion. See [DISCLAIMER.md](DISCLAIMER.md) before using or referencing this code in any clinical context.
 
@@ -50,8 +50,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Chronic kidney disease (KDIGO staging) | [conditions/chronic_kidney_disease](conditions/chronic_kidney_disease) | KDIGO 2024; KDIGO 2012 | Implemented |
 | Delirium (4AT screen) | [conditions/delirium](conditions/delirium) | Bellelli 2014; Shenkin 2019 | Implemented |
 | Cervical-spine trauma (NEXUS, Canadian C-Spine) | [conditions/cervical_spine_trauma](conditions/cervical_spine_trauma) | Hoffman 2000; Stiell 2001, 2003 | Implemented |
+| Head injury (Canadian CT Head Rule) | [conditions/head_injury](conditions/head_injury) | Stiell 2001, 2005 | Implemented |
 
-The remaining 34 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9). Suggestions for the next high-priority rules are welcome — open an issue or see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 33 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as individual issues (Ottawa SAH Rule, CIWA-Ar, qSOFA, NEWS2, Westley Croup Score, revised Geneva score). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -328,6 +329,27 @@ features = CanadianCSpineFeatures(
 )
 result = canadian_c_spine_assessment(features)
 print(result.imaging_indicated, result.determining_step)
+```
+
+Use the head injury module (Canadian CT Head Rule):
+
+```python
+from conditions.head_injury import (
+    CanadianCtHeadFeatures,
+    canadian_ct_head_assessment,
+)
+
+features = CanadianCtHeadFeatures(
+    gcs_below_15_at_2_hours=False,
+    suspected_open_or_depressed_skull_fracture=False,
+    sign_of_basal_skull_fracture=False,
+    vomiting_2_or_more_episodes=False,
+    age_65_or_older=True,
+    retrograde_amnesia_30_min_or_more=False,
+    dangerous_mechanism=False,
+)
+result = canadian_ct_head_assessment(features)
+print(result.ct_indicated, result.high_risk_factors_present)
 ```
 
 ## Contributing
