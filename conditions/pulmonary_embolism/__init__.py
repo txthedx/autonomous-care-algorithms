@@ -1,5 +1,11 @@
-"""Pulmonary embolism: Wells PE score and PERC."""
+"""Pulmonary embolism: Wells PE score, PERC, and the revised Geneva score."""
 
+from .geneva import (
+    GenevaFeatures,
+    GenevaResult,
+    geneva_assessment,
+    geneva_score,
+)
 from .perc import (
     PercFeatures,
     PercResult,
@@ -18,8 +24,12 @@ from .wells_pe import (
 )
 
 __all__ = [
+    "GenevaFeatures",
+    "GenevaResult",
     "PercFeatures",
     "PercResult",
+    "geneva_assessment",
+    "geneva_score",
     "ThreeTierBand",
     "TwoTierBand",
     "WellsPeFeatures",

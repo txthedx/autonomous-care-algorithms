@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.27.0] — 2026-06-07
+
+### Added
+- **Revised Geneva score** added to the pulmonary embolism module (`conditions/pulmonary_embolism/geneva.py`) — a fully clinical (no-gestalt) pretest-probability alternative to Wells PE.
+  - `geneva_assessment(features)` — eight weighted items (total 0–22) with a three-tier band (low 0–3 / intermediate 4–10 / high ≥11) and approximate PE prevalence per band. Age and heart rate entered raw with the >65 and 75–94/≥95 thresholds applied internally; negative values raise `ValueError`.
+  - Registered in the engine catalog and the demo. Source: Le Gal 2006 *Ann Intern Med* (PMID 16461960).
+- 16 new tests covering each item's points, the heart-rate bands, the score-band boundaries, and the maximum of 22. Total repo test count: 810.
+
+Closes #32.
+
 ## [0.26.0] — 2026-06-07
 
 ### Added

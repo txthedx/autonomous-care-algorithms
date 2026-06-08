@@ -89,3 +89,23 @@ Short tags map to entries in [references.bib](references.bib):
 - `Kline 2004` — Kline JA et al., *J Thromb Haemost* 2004.
 - `Kline 2008` — Kline JA et al., *J Thromb Haemost* 2008.
 - `Konstantinides 2019` — ESC 2019 PE guideline.
+
+## Revised Geneva score (alternative pretest probability)
+
+A fully clinical alternative to Wells PE (no gestalt item). Derived: Le Gal 2006 (*Ann Intern Med*).
+
+| Item | Points |
+|---|---|
+| Age > 65 | +1 |
+| Previous DVT or PE | +3 |
+| Surgery (GA) or lower-limb fracture within 1 month | +2 |
+| Active malignancy | +2 |
+| Unilateral lower-limb pain | +3 |
+| Hemoptysis | +2 |
+| Heart rate 75–94 | +3 |
+| Heart rate ≥ 95 | +5 |
+| Pain on lower-limb deep venous palpation and unilateral edema | +4 |
+
+Bands (approx. PE prevalence, Le Gal 2006): 0–3 low (~8%), 4–10 intermediate (~29%), ≥ 11 high (~74%).
+
+- `Le Gal 2006` — Le Gal G et al., *Ann Intern Med* 2006 (revised Geneva score).
