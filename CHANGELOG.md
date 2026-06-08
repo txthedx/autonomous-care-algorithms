@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.26.0] — 2026-06-07
+
+### Added
+- Twentieth condition: **croup (Westley Croup Score)**.
+  - `westley_assessment(features)` — grades croup severity from five items (level of consciousness, cyanosis, stridor, air entry, retractions) for a total of 0–17, returning the score, severity band (mild ≤2 / moderate 3–5 / severe 6–11 / impending respiratory failure ≥12), a disposition, and caveats. Items entered as named levels.
+  - Caveats note it is a grading tool, not a diagnosis, and severe/impending scores warrant urgent intervention regardless of the number. Registered in the engine catalog and the demo.
+  - Source: Westley 1978 *Am J Dis Child* (PMID 347921).
+- 14 new tests covering each item's levels, the band boundaries (2/3, 5/6, 11/12), and the maximum of 17. Total repo test count: 794.
+
+Closes #31.
+
 ## [0.25.0] — 2026-06-07
 
 ### Added
