@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
-## [0.18.0] — 2026-06-07
+## [0.19.0] — 2026-06-07
+
+### Added
+- **Engine dispatch (`engine/dispatch.py`)** — applicability over the catalog (Phase 2 of [docs/architecture.md](docs/architecture.md)). Given a flat bag of available structured features, it decides which algorithms can run, runs them, and reports which need more data — optionally narrowed to a clinical presentation. Deterministic and instant.
+  - `presentations()` and `by_presentation(tag)` index the catalog by presenting complaint (e.g. "chest pain", "pulmonary embolism").
+  - `suggest(features, presentation=None)` ranks every candidate algorithm by how close it is to runnable, reporting `runnable` and `missing_inputs`.
+  - `run_applicable(features, presentation=None)` runs every algorithm whose inputs are fully present and returns `applicable` (key, label, result), `needs_more_data` (with missing inputs), and `errors` (inputs an algorithm rejected). Each algorithm reads only the fields it declares, so a broad feature bag drives several rules at once.
+- 15 new tests: presentation indexing, applicability ranking, multi-algorithm runs from one feature bag, per-algorithm field projection, missing-data reporting, the out-of-range error path, and presentation filtering. Total repo test count: 703.
 
 ### Added
 - **Engine registry (`engine/registry.py`)** — the machine-readable catalog and first layer of the clinical decision-support engine (Phase 1 of [docs/architecture.md](docs/architecture.md)). It is the single source of truth for the condition catalog; input schemas are derived by introspection of the `conditions/` dataclasses, so they cannot drift from the implementation.
