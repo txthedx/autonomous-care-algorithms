@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
-## [0.19.0] — 2026-06-07
+## [0.20.0] — 2026-06-07
+
+### Added
+- **MCP server (`engine/mcp_server.py`)** — exposes the engine as Model Context Protocol tools so a Claude-based clinical assistant can call it in real time while drafting a note (Phase 3 of [docs/architecture.md](docs/architecture.md)). Stateless, no storage, no input logging; a *not-a-medical-device* disclaimer on every result.
+  - Tools: `list_conditions`, `list_presentations`, `get_condition_schema`, `describe_condition`, `run_algorithm`, `suggest_algorithms`, `run_applicable`.
+  - `run_algorithm` returns `{"ok": true, "result": ...}` or `{"ok": false, "error": ..., "missing_inputs": [...]}`, so the assistant can ask the clinician for what's missing rather than failing.
+  - The MCP SDK is an **optional extra** (`pip install ".[mcp]"`); the tool logic is plain functions over the registry and dispatch layers, and the SDK is imported lazily, so the core stays standard-library-only and importing the module never requires the SDK. Run with `python -m engine.mcp_server`. See [docs/mcp.md](docs/mcp.md).
+- 11 new tests: every tool's behavior (success, missing inputs, unknown condition, out-of-range), plus a server-wiring test (skipped when the SDK is absent) asserting all seven tools register with descriptions and input schemas. Total repo test count: 714.
 
 ### Added
 - **Engine dispatch (`engine/dispatch.py`)** — applicability over the catalog (Phase 2 of [docs/architecture.md](docs/architecture.md)). Given a flat bag of available structured features, it decides which algorithms can run, runs them, and reports which need more data — optionally narrowed to a clinical presentation. Deterministic and instant.
