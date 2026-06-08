@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
-## [0.21.0] — 2026-06-07
+## [0.22.0] — 2026-06-07
+
+### Added
+- **Extraction adapter (`adapters/extraction.py`)** — the optional bridge from a free-text clinical note to the structured features the engine consumes (Phase 5 of [docs/architecture.md](docs/architecture.md)). It is separate from the core, is the only component that sees a raw note, stores nothing, and logs nothing.
+  - `assess_note(note, extractor, presentation=None)` builds a union schema of the candidate conditions, asks the extractor to fill what the note supports, and runs every algorithm whose inputs are satisfied — returning `extracted_features` plus the dispatch result.
+  - `ClaudeExtractor` uses Claude tool-use to fill the schema and is instructed to report only values the note explicitly supports (it never infers or assumes defaults). The note is sent with the **caller's** API key in the **caller's** environment; PHI never reaches the open engine.
+  - `DictExtractor` is a deterministic, no-LLM extractor for tests and examples. The Anthropic SDK is an **optional extra** (`pip install ".[adapter]"`); a client can be injected, so the full flow is testable without the SDK, a key, or network. See [docs/adapter.md](docs/adapter.md).
+- 10 new tests: union-schema merging, deterministic and partial extraction (gaps reported as needs-more-data), and the full `ClaudeExtractor` tool-use flow against a fake Anthropic client. Total repo test count: 737.
 
 ### Added
 - **REST API (`engine/api.py`)** — a FastAPI service over the engine: the same operations as the MCP server, as HTTP endpoints with OpenAPI docs, for non-agent callers (Phase 4 of [docs/architecture.md](docs/architecture.md)). Stateless; no storage; no input logging; a *not-a-medical-device* disclaimer on every result.
