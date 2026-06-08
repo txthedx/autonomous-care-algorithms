@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.23.0] — 2026-06-07
+
+### Added
+- **Eval harness (`evals/`)** — end-to-end evaluation of the full stack, note → features → engine (Phase 6 of [docs/architecture.md](docs/architecture.md), the final engine phase). Eight synthetic, no-PHI primary-care vignettes run through the extraction adapter (deterministically with `DictExtractor` in CI) and the engine, asserting the right algorithms surface with the right results.
+  - `run_suite()` / `run_vignette()` return structured pass/fail checks; `python -m evals.harness` prints a summary and exits non-zero on failure. An `extractor_factory` lets the same vignettes run with a live LLM-in-the-loop extractor.
+  - Vignettes span chest pain (HEART), pneumonia (CRB-65), DVT (Wells), syncope (SFSR), delirium (4AT), head injury (Canadian CT Head), CKD (KDIGO), and a multi-algorithm case. Expected values are captured from the deterministic algorithms, so a failure is a regression signal.
+- 13 new tests (the full suite passes, per-vignette parametrized checks, the multi-algorithm case, and a guard proving the harness fails on a wrong expectation rather than no-opping). Total repo test count: 750.
+
+### Note
+
+This completes the clinical decision-support engine: deterministic core → registry → dispatch → MCP server + REST API → extraction adapter → eval harness. A free-text clinical note can now be turned into structured features and queried against the catalog in near-real-time, with the deterministic core and its interfaces never seeing raw notes.
+
 ## [0.22.0] — 2026-06-07
 
 ### Added
