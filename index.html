@@ -292,6 +292,16 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "ottawa_sah": {
+        "label": "Headache — Ottawa SAH Rule",
+        "module": "conditions.subarachnoid_hemorrhage", "fn": "ottawa_sah_assessment",
+        "folder": "subarachnoid_hemorrhage",
+        "blurb": "Rules out subarachnoid hemorrhage in alert patients with acute non-traumatic headache. Highly sensitive. Perry 2013.",
+        "params": [
+            {"title": "The six criteria", "dataclass": "SahFeatures"},
+            {"title": "Applicability (inclusion and exclusions)", "dataclass": "SahApplicability"},
+        ],
+    },
     "canadian_ct_head": {
         "label": "Head injury — Canadian CT Head Rule",
         "module": "conditions.head_injury", "fn": "canadian_ct_head_assessment",
@@ -482,6 +492,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/subarachnoid_hemorrhage/__init__.py",
+  "conditions/subarachnoid_hemorrhage/ottawa_sah.py",
   "conditions/syncope/__init__.py",
   "conditions/syncope/san_francisco_syncope_rule.py",
   "conditions/upper_gi_bleeding/__init__.py",
