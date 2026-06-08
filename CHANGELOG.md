@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.29.0] — 2026-06-07
+
+### Added
+- Twenty-second condition: **alcohol withdrawal (CIWA-Ar)**.
+  - `ciwa_ar_assessment(features)` — sums the ten CIWA-Ar items (nine scored 0–7, orientation 0–4; total 0–67) and returns the severity band (minimal <8 / mild-to-moderate 8–15 / moderate-to-severe 16–20 / severe >20), a disposition, and caveats. Items validated to their ranges; out-of-range values raise `ValueError`.
+  - Caveats note CIWA-Ar requires a cooperative patient, the bands are the commonly used interpretation (the original instrument prescribed no fixed thresholds), and the medication trigger/agent are protocol-specific. Registered in the engine catalog and the demo.
+  - Source: Sullivan 1989 *Br J Addict* (PMID 2597811).
+- 13 new tests covering the item sum, the maximum of 67, the band boundaries, and validation. Total repo test count: 891.
+
+Closes #28.
+
 ## [0.28.0] — 2026-06-07
 
 ### Added
