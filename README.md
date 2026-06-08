@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twenty conditions are implemented (25 algorithm modules, 794 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twenty conditions are implemented (26 algorithm modules, 810 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -44,7 +44,7 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Acute ankle and midfoot injury | [conditions/ankle_injury](conditions/ankle_injury) | Stiell 1992, 1993; Bachmann 2003 | Implemented |
 | Acute knee injury | [conditions/knee_injury](conditions/knee_injury) | Stiell 1995, 1996; Bachmann 2004 | Implemented |
 | Deep vein thrombosis (Wells score) | [conditions/deep_vein_thrombosis](conditions/deep_vein_thrombosis) | Wells 1997; Wells 2003; Scarvelis 2006 | Implemented |
-| Pulmonary embolism (Wells PE + PERC) | [conditions/pulmonary_embolism](conditions/pulmonary_embolism) | Wells 2000, 2001; Kline 2004, 2008; ESC 2019 | Implemented |
+| Pulmonary embolism (Wells PE + PERC + revised Geneva) | [conditions/pulmonary_embolism](conditions/pulmonary_embolism) | Wells 2000, 2001; Kline 2004, 2008; Le Gal 2006; ESC 2019 | Implemented |
 | Chest pain (HEART score) | [conditions/chest_pain](conditions/chest_pain) | Six 2008; Backus 2013; Mahler 2015 | Implemented |
 | Upper GI bleeding (Glasgow-Blatchford) | [conditions/upper_gi_bleeding](conditions/upper_gi_bleeding) | Blatchford 2000; Stanley 2009, 2017; NICE CG141 | Implemented |
 | Appendicitis (Alvarado / MANTRELS) | [conditions/appendicitis](conditions/appendicitis) | Alvarado 1986; Ohle 2011 | Implemented |
@@ -57,7 +57,7 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Sepsis (qSOFA) | [conditions/sepsis](conditions/sepsis) | Singer 2016; Seymour 2016 | Implemented |
 | Croup (Westley Croup Score) | [conditions/croup](conditions/croup) | Westley 1978 | Implemented |
 
-The remaining 30 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as individual issues (CIWA-Ar, NEWS2, revised Geneva score). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 30 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as individual issues (CIWA-Ar, NEWS2). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 

@@ -365,6 +365,13 @@ REGISTRY = {
         "blurb": "Need for intervention in upper GI bleeding; score 0 flags outpatient candidates. Blatchford 2000; Stanley 2017. SI units (urea mmol/L, Hb g/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "GlasgowBlatchfordFeatures"}],
     },
+    "geneva": {
+        "label": "PE — revised Geneva score",
+        "module": "conditions.pulmonary_embolism", "fn": "geneva_assessment",
+        "folder": "pulmonary_embolism",
+        "blurb": "Fully clinical pretest probability of PE (no gestalt); low/intermediate/high. Le Gal 2006.",
+        "params": [{"title": "Clinical features", "dataclass": "GenevaFeatures"}],
+    },
     "perc": {
         "label": "PE — PERC rule-out",
         "module": "conditions.pulmonary_embolism", "fn": "perc_assessment",
@@ -506,6 +513,7 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/pulmonary_embolism/geneva.py",
   "conditions/croup/__init__.py",
   "conditions/croup/westley.py",
   "conditions/sepsis/__init__.py",
