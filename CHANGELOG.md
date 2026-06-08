@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
-## [0.20.0] — 2026-06-07
+## [0.21.0] — 2026-06-07
+
+### Added
+- **REST API (`engine/api.py`)** — a FastAPI service over the engine: the same operations as the MCP server, as HTTP endpoints with OpenAPI docs, for non-agent callers (Phase 4 of [docs/architecture.md](docs/architecture.md)). Stateless; no storage; no input logging; a *not-a-medical-device* disclaimer on every result.
+  - `GET /conditions`, `GET /presentations`, `GET /conditions/{c}`, `GET /conditions/{c}/schema`, `POST /conditions/{c}/run`, `POST /suggest`, `POST /run-applicable`.
+  - `POST /conditions/{c}/run` returns `200 {result, disclaimer}`, `404` for an unknown condition, or `422 {errors, missing_inputs}` for missing/rejected inputs.
+  - FastAPI is an **optional extra** (`pip install ".[api]"`); the app is built by a lazy `create_app()` factory, so importing the module never requires FastAPI and the core stays standard-library-only. Serve with `uvicorn "engine.api:create_app" --factory`. See [docs/api.md](docs/api.md).
+- 13 new tests (FastAPI `TestClient`, skipped when the `[api]` deps are absent): every endpoint, the 404 and 422 paths, dispatch over a feature bag, and the OpenAPI schema. Total repo test count: 727.
 
 ### Added
 - **MCP server (`engine/mcp_server.py`)** — exposes the engine as Model Context Protocol tools so a Claude-based clinical assistant can call it in real time while drafting a note (Phase 3 of [docs/architecture.md](docs/architecture.md)). Stateless, no storage, no input logging; a *not-a-medical-device* disclaimer on every result.
