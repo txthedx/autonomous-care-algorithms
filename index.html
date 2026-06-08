@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "westley_croup": {
+        "label": "Croup — Westley Croup Score",
+        "module": "conditions.croup", "fn": "westley_assessment",
+        "folder": "croup",
+        "blurb": "Croup severity in children from five clinical items (0-17). Westley 1978.",
+        "params": [{"title": "The five items", "dataclass": "WestleyFeatures"}],
+    },
     "qsofa": {
         "label": "Sepsis — qSOFA",
         "module": "conditions.sepsis", "fn": "qsofa_assessment",
@@ -499,6 +506,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/croup/__init__.py",
+  "conditions/croup/westley.py",
   "conditions/sepsis/__init__.py",
   "conditions/sepsis/qsofa.py",
   "conditions/subarachnoid_hemorrhage/__init__.py",
