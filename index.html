@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "news2": {
+        "label": "Early warning — NEWS2",
+        "module": "conditions.early_warning", "fn": "news2_assessment",
+        "folder": "early_warning",
+        "blurb": "Aggregate early-warning score for acute deterioration in adults. Seven vitals + red score. RCP 2017.",
+        "params": [{"title": "Vitals and observations", "dataclass": "NewsFeatures"}],
+    },
     "westley_croup": {
         "label": "Croup — Westley Croup Score",
         "module": "conditions.croup", "fn": "westley_assessment",
@@ -516,6 +523,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/geneva.py",
   "conditions/croup/__init__.py",
   "conditions/croup/westley.py",
+  "conditions/early_warning/__init__.py",
+  "conditions/early_warning/news2.py",
   "conditions/sepsis/__init__.py",
   "conditions/sepsis/qsofa.py",
   "conditions/subarachnoid_hemorrhage/__init__.py",

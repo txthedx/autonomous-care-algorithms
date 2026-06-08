@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.28.0] — 2026-06-07
+
+### Added
+- Twenty-first condition: **acute deterioration (NEWS2)**.
+  - `news2_assessment(features)` — aggregates seven physiological parameters (each 0–3) into the NEWS2 score, with a per-parameter breakdown, a red-score flag (any single parameter = 3), the monitoring band (low / low-medium / medium / high), and the clinical response. Vitals entered raw with all bands applied internally; out-of-range values raise `ValueError`.
+  - Implements both SpO₂ scales (Scale 2 for hypercapnic respiratory failure, including the on-air vs on-oxygen distinction at ≥ 93%), the ACVPU consciousness item, and the full RCP banding tables (respiration, SpO₂, supplemental oxygen, systolic BP, pulse, consciousness, temperature). Band cutoffs and both scales verified against the official tables.
+  - Caveats note it is not validated for children or pregnancy and that clinical judgement overrides the score. Registered in the engine catalog and the demo.
+  - Source: Royal College of Physicians, NEWS2 (RCP 2017).
+- 68 new tests covering every parameter band boundary, both SpO₂ scales (air and oxygen), the red-score rule, the aggregate band cutoffs, and validation. Total repo test count: 878.
+
+Closes #30.
+
 ## [0.27.0] — 2026-06-07
 
 ### Added
