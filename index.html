@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "ciwa_ar": {
+        "label": "Alcohol withdrawal — CIWA-Ar",
+        "module": "conditions.alcohol_withdrawal", "fn": "ciwa_ar_assessment",
+        "folder": "alcohol_withdrawal",
+        "blurb": "Quantifies alcohol withdrawal severity (0-67) to guide symptom-triggered therapy. Sullivan 1989.",
+        "params": [{"title": "The ten items", "dataclass": "CiwaArFeatures"}],
+    },
     "news2": {
         "label": "Early warning — NEWS2",
         "module": "conditions.early_warning", "fn": "news2_assessment",
@@ -525,6 +532,8 @@ const PY_FILES = [
   "conditions/croup/westley.py",
   "conditions/early_warning/__init__.py",
   "conditions/early_warning/news2.py",
+  "conditions/alcohol_withdrawal/__init__.py",
+  "conditions/alcohol_withdrawal/ciwa_ar.py",
   "conditions/sepsis/__init__.py",
   "conditions/sepsis/qsofa.py",
   "conditions/subarachnoid_hemorrhage/__init__.py",

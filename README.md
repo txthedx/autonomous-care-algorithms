@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twenty-one conditions are implemented (27 algorithm modules, 878 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twenty-two conditions are implemented (28 algorithm modules, 891 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -57,8 +57,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Sepsis (qSOFA) | [conditions/sepsis](conditions/sepsis) | Singer 2016; Seymour 2016 | Implemented |
 | Croup (Westley Croup Score) | [conditions/croup](conditions/croup) | Westley 1978 | Implemented |
 | Acute deterioration (NEWS2) | [conditions/early_warning](conditions/early_warning) | RCP 2017 | Implemented |
+| Alcohol withdrawal (CIWA-Ar) | [conditions/alcohol_withdrawal](conditions/alcohol_withdrawal) | Sullivan 1989 | Implemented |
 
-The remaining 29 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as an individual issue (CIWA-Ar). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 28 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
