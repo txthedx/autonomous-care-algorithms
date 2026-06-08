@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.24.0] — 2026-06-07
+
+### Added
+- Eighteenth condition: **subarachnoid hemorrhage (Ottawa SAH Rule)**.
+  - `ottawa_sah_assessment(features, applicability)` — a highly sensitive rule-out for SAH in alert patients with acute non-traumatic headache. Returns whether the rule applies, whether investigation is indicated (`True`/`False`/`None`), the criteria present, and (when not applicable) why.
+  - Six criteria (age ≥40, neck pain/stiffness, witnessed LOC, onset during exertion, thunderclap headache, limited neck flexion). An applicability gate enforces the inclusion population (alert/GCS 15, ≥15 years, new severe non-traumatic headache peaking within 1 hour) and exclusions (new neurologic deficit, prior aneurysm/SAH/brain tumor, chronic recurrent headache).
+  - Caveats note the ~100% sensitivity / ~15% specificity tradeoff: a negative rule reliably excludes SAH, a positive rule does not mean SAH is present.
+  - Registered in the engine catalog and the demo. Sources: Perry 2013 *JAMA* (PMID 24065011, derivation), Perry 2017 *CMAJ* (PMID 29133539, validation).
+- 14 new tests covering each criterion, every applicability/exclusion path, the rule-out and investigate branches, and the output shape. Total repo test count: 764.
+
+Closes #27.
+
 ## [0.23.0] — 2026-06-07
 
 ### Added

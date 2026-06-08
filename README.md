@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Seventeen conditions are implemented (22 algorithm modules, 666 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Eighteen conditions are implemented (23 algorithm modules, 764 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -53,8 +53,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Delirium (4AT screen) | [conditions/delirium](conditions/delirium) | Bellelli 2014; Shenkin 2019 | Implemented |
 | Cervical-spine trauma (NEXUS, Canadian C-Spine) | [conditions/cervical_spine_trauma](conditions/cervical_spine_trauma) | Hoffman 2000; Stiell 2001, 2003 | Implemented |
 | Head injury (Canadian CT Head Rule) | [conditions/head_injury](conditions/head_injury) | Stiell 2001, 2005 | Implemented |
+| Subarachnoid hemorrhage (Ottawa SAH Rule) | [conditions/subarachnoid_hemorrhage](conditions/subarachnoid_hemorrhage) | Perry 2013, 2017 | Implemented |
 
-The remaining 33 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as individual issues (Ottawa SAH Rule, CIWA-Ar, qSOFA, NEWS2, Westley Croup Score, revised Geneva score). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 32 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9), with the next tranche open as individual issues (CIWA-Ar, qSOFA, NEWS2, Westley Croup Score, revised Geneva score). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 

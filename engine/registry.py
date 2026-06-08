@@ -130,6 +130,10 @@ _REGISTRY: tuple[_Entry, ...] = (
     _Entry("canadian_ct_head", "Head injury — Canadian CT Head Rule",
            "conditions.head_injury", "canadian_ct_head_assessment",
            ("head injury", "trauma"), ("CanadianCtHeadFeatures",)),
+    _Entry("ottawa_sah", "Headache — Ottawa SAH Rule",
+           "conditions.subarachnoid_hemorrhage", "ottawa_sah_assessment",
+           ("headache", "subarachnoid hemorrhage", "thunderclap headache"),
+           ("SahFeatures", "SahApplicability")),
 )
 
 _BY_KEY: dict[str, _Entry] = {e.key: e for e in _REGISTRY}
