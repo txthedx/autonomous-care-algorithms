@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autonomous-care-algorithms"
-version = "0.17.0"
+version = "0.18.0"
 description = "Open-source, citation-backed clinical decision algorithms for common primary care presentations."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -29,9 +29,9 @@ Homepage = "https://github.com/txthedx/autonomous-care-algorithms"
 Issues = "https://github.com/txthedx/autonomous-care-algorithms/issues"
 
 [tool.setuptools.packages.find]
-include = ["conditions*"]
+include = ["conditions*", "engine*"]
 
 [tool.pytest.ini_options]
-testpaths = ["conditions"]
+testpaths = ["conditions", "engine"]
 python_files = ["test_*.py"]
 addopts = "-ra"

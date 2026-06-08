@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
-## [0.17.0] — 2026-06-07
+## [0.18.0] — 2026-06-07
+
+### Added
+- **Engine registry (`engine/registry.py`)** — the machine-readable catalog and first layer of the clinical decision-support engine (Phase 1 of [docs/architecture.md](docs/architecture.md)). It is the single source of truth for the condition catalog; input schemas are derived by introspection of the `conditions/` dataclasses, so they cannot drift from the implementation.
+  - Public API: `condition_keys()`, `list_conditions()`, `get_schema(condition)`, `describe(condition)`, `validate(condition, features)`, `missing_inputs(condition, features)`, and `run(condition, features)`.
+  - `get_schema` produces a JSON Schema (boolean / integer / number / string-enum) for each condition's flattened inputs, including multi-dataclass conditions (e.g. the Ottawa rules) and scalar parameters (e.g. PERC's pretest-probability flag). `run` reconstructs the dataclasses, calls the algorithm, and returns a JSON-able result — the operation the MCP server and REST API will wrap.
+  - Covers all 24 calculators across the 17 condition modules. The deterministic core in `conditions/` is unchanged and imported lazily; the engine adds no third-party dependencies.
+- `engine/` is now packaged and tested (`pyproject.toml` package-find and pytest `testpaths` updated).
+- 22 new tests: catalog integrity, a drift guard (every condition module must be registered), schema generation for every condition and every parameter shape, `run`-equals-direct-call equivalence, validation, and JSON-serializability. Total repo test count: 688.
 
 ### Added
 - Seventeenth condition: **head injury (Canadian CT Head Rule)**.
