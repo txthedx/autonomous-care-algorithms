@@ -292,6 +292,13 @@ REGISTRY = {
         "blurb": "Probability of acute appendicitis to guide imaging, surgical consult, and discharge. Alvarado 1986. SI units (temp °C, WCC 10⁹/L).",
         "params": [{"title": "Clinical and laboratory features", "dataclass": "AlvaradoFeatures"}],
     },
+    "qsofa": {
+        "label": "Sepsis — qSOFA",
+        "module": "conditions.sepsis", "fn": "qsofa_assessment",
+        "folder": "sepsis",
+        "blurb": "Rapid prompt for higher-risk patients with suspected infection. Score >=2 of RR>=22, GCS<15, SBP<=100. Singer 2016.",
+        "params": [{"title": "Vitals and GCS", "dataclass": "QsofaFeatures"}],
+    },
     "ottawa_sah": {
         "label": "Headache — Ottawa SAH Rule",
         "module": "conditions.subarachnoid_hemorrhage", "fn": "ottawa_sah_assessment",
@@ -492,6 +499,8 @@ const PY_FILES = [
   "conditions/pulmonary_embolism/__init__.py",
   "conditions/pulmonary_embolism/perc.py",
   "conditions/pulmonary_embolism/wells_pe.py",
+  "conditions/sepsis/__init__.py",
+  "conditions/sepsis/qsofa.py",
   "conditions/subarachnoid_hemorrhage/__init__.py",
   "conditions/subarachnoid_hemorrhage/ottawa_sah.py",
   "conditions/syncope/__init__.py",

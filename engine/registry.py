@@ -134,6 +134,8 @@ _REGISTRY: tuple[_Entry, ...] = (
            "conditions.subarachnoid_hemorrhage", "ottawa_sah_assessment",
            ("headache", "subarachnoid hemorrhage", "thunderclap headache"),
            ("SahFeatures", "SahApplicability")),
+    _Entry("qsofa", "Sepsis — qSOFA", "conditions.sepsis", "qsofa_assessment",
+           ("sepsis", "suspected infection", "fever"), ("QsofaFeatures",)),
 )
 
 _BY_KEY: dict[str, _Entry] = {e.key: e for e in _REGISTRY}

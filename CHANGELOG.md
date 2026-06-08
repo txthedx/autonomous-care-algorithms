@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.25.0] — 2026-06-07
+
+### Added
+- Nineteenth condition: **sepsis (qSOFA)**.
+  - `qsofa_assessment(features)` — one point each for respiratory rate ≥ 22/min, altered mentation (GCS < 15), and systolic BP ≤ 100 mmHg; returns the score (0–3), contributing factors, risk band (`higher_risk` ≥ 2 / `lower_risk`), a disposition, and caveats. Vitals/GCS entered raw with thresholds applied internally; out-of-range values raise `ValueError`.
+  - Caveats state qSOFA is a prognostic prompt, not a diagnosis, and that a score < 2 does not rule out sepsis. Registered in the engine catalog and the demo.
+  - Sources: Singer 2016 *JAMA* (PMID 26903338, Sepsis-3), Seymour 2016 *JAMA* (PMID 26903335, criteria derivation).
+- 16 new tests covering each criterion's threshold boundary, the band cutoff, dispositions, and validation. Total repo test count: 780.
+
+Closes #29.
+
 ## [0.24.0] — 2026-06-07
 
 ### Added
