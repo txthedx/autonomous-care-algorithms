@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.32.0] — 2026-06-13
+
+### Added
+- Twenty-fifth condition: **GLP-1 receptor agonist eligibility** — the third medication-safety module, completing the DTC-wedge safety set (erectile dysfunction, hair loss, weight management).
+  - `glp1_eligibility(features)` — screens initiation of a GLP-1 receptor agonist (e.g. semaglutide) and returns `contraindicated`, `needs_clinician_review`, or `eligible`. A personal or family history of medullary thyroid carcinoma (MTC) or MEN 2 → contraindicated (the class boxed warning for thyroid C-cell tumors); pregnancy → contraindicated in the weight-management setting (discontinue when recognized; no benefit; possible fetal harm). A history of pancreatitis (not studied; consider alternatives) or breastfeeding (label weighs benefit/risk) → needs clinician review. Precedence: contraindication over review over eligible.
+  - Outputs are eligibility verdicts with the firing factors — not prescriptions, doses, or routes. Caveats note the MTC/MEN 2 warning is rodent-derived (human causation not established) and that the screen covers only these initiation factors. Registered in the engine catalog and the demo.
+  - Sources: U.S. FDA OZEMPIC (semaglutide, NDA 209637) and WEGOVY (semaglutide, NDA 215256) prescribing information; the MTC/MEN 2 boxed warning is a GLP-1 receptor agonist class effect.
+- 9 new tests covering each contraindication and review factor, the contraindication-over-review precedence, the eligible path, and output shape. Total repo test count: 928.
+
+Closes #51.
+
 ## [0.31.0] — 2026-06-13
 
 ### Added

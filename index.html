@@ -334,6 +334,13 @@ REGISTRY = {
         "blurb": "Health Canada (Jan 2024): screen for suicidal ideation, self-harm, and depression before prescribing finasteride.",
         "params": [{"title": "Psychiatric screen", "dataclass": "FinasteridePsychiatricFeatures"}],
     },
+    "glp1_eligibility": {
+        "label": "Weight management — GLP-1 receptor agonist eligibility",
+        "module": "conditions.glp1_safety", "fn": "glp1_eligibility",
+        "folder": "glp1_safety",
+        "blurb": "Initiation screen: MTC/MEN2 or pregnancy → contraindicated; pancreatitis history or breastfeeding → clinician review. FDA Ozempic/Wegovy labels.",
+        "params": [{"title": "Initiation factors", "dataclass": "Glp1EligibilityFeatures"}],
+    },
     "westley_croup": {
         "label": "Croup — Westley Croup Score",
         "module": "conditions.croup", "fn": "westley_assessment",
@@ -566,6 +573,8 @@ const PY_FILES = [
   "conditions/pde5i_nitrate/pde5i_nitrate.py",
   "conditions/finasteride_safety/__init__.py",
   "conditions/finasteride_safety/finasteride_safety.py",
+  "conditions/glp1_safety/__init__.py",
+  "conditions/glp1_safety/glp1_safety.py",
   "conditions/sepsis/__init__.py",
   "conditions/sepsis/qsofa.py",
   "conditions/subarachnoid_hemorrhage/__init__.py",
