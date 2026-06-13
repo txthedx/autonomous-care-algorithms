@@ -170,6 +170,12 @@ _REGISTRY: tuple[_Entry, ...] = (
            ("hair loss", "androgenetic alopecia", "medication safety",
             "depression screen"),
            ("FinasteridePsychiatricFeatures",)),
+    _Entry("glp1_eligibility",
+           "Weight management — GLP-1 receptor agonist eligibility",
+           "conditions.glp1_safety", "glp1_eligibility",
+           ("weight management", "obesity", "type 2 diabetes",
+            "medication safety", "contraindication"),
+           ("Glp1EligibilityFeatures",)),
 )
 
 _BY_KEY: dict[str, _Entry] = {e.key: e for e in _REGISTRY}

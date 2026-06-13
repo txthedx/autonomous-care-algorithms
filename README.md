@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twenty-four conditions are implemented (30 algorithm modules, 919 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, renal, and medication-safety domains. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twenty-five conditions are implemented (31 algorithm modules, 928 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, renal, and medication-safety domains. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -60,8 +60,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Alcohol withdrawal (CIWA-Ar) | [conditions/alcohol_withdrawal](conditions/alcohol_withdrawal) | Sullivan 1989 | Implemented |
 | Erectile dysfunction (PDE5 inhibitor + nitrate contraindication) | [conditions/pde5i_nitrate](conditions/pde5i_nitrate) | Schwartz 2010; Kloner 2003; FDA labels | Implemented |
 | Finasteride safety (teratogenicity + psychiatric screen) | [conditions/finasteride_safety](conditions/finasteride_safety) | FDA Propecia label; Health Canada 2024 | Implemented |
+| GLP-1 receptor agonist eligibility | [conditions/glp1_safety](conditions/glp1_safety) | FDA Ozempic / Wegovy labels | Implemented |
 
-The remaining 26 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 25 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -405,6 +406,23 @@ screen = finasteride_psychiatric_screen(
     )
 )
 print(screen.verdict, screen.block_initiation)
+```
+
+Use the GLP-1 receptor agonist eligibility module:
+
+```python
+from conditions.glp1_safety import Glp1EligibilityFeatures, glp1_eligibility
+
+result = glp1_eligibility(
+    Glp1EligibilityFeatures(
+        personal_or_family_history_mtc=True,
+        men2_syndrome=False,
+        pregnancy=False,
+        breastfeeding=False,
+        history_of_pancreatitis=False,
+    )
+)
+print(result.verdict, result.contraindication_factors)
 ```
 
 ## Contributing
