@@ -148,6 +148,16 @@ _REGISTRY: tuple[_Entry, ...] = (
     _Entry("ciwa_ar", "Alcohol withdrawal — CIWA-Ar",
            "conditions.alcohol_withdrawal", "ciwa_ar_assessment",
            ("alcohol withdrawal", "delirium tremens"), ("CiwaArFeatures",)),
+    _Entry("pde5i_nitrate",
+           "Erectile dysfunction — PDE5 inhibitor + nitrate contraindication",
+           "conditions.pde5i_nitrate", "pde5i_nitrate_contraindication",
+           ("erectile dysfunction", "medication safety", "contraindication"),
+           ("Pde5iNitrateFeatures",)),
+    _Entry("pde5i_nitrate_timing",
+           "Erectile dysfunction — nitrate timing after PDE5 inhibitor",
+           "conditions.pde5i_nitrate", "nitrate_timing_after_pde5i",
+           ("erectile dysfunction", "medication safety", "contraindication"),
+           ("NitrateTimingFeatures",)),
 )
 
 _BY_KEY: dict[str, _Entry] = {e.key: e for e in _REGISTRY}
