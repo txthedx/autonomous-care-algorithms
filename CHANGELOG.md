@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.31.0] — 2026-06-13
+
+### Added
+- Twenty-fourth condition: **finasteride safety screens** — the second medication-safety module (verdict shape), covering teratogenicity and the Health Canada pre-prescribe psychiatric screen.
+  - `finasteride_contraindication(features)` — finasteride is contraindicated in pregnancy and in anyone who is or may become pregnant: as a Type II 5α-reductase inhibitor it lowers dihydrotestosterone and can cause abnormalities of the external genitalia of a male fetus (teratogenic; historically FDA Pregnancy Category X). The input captures the reproductive situation, not gender identity; caveats note pregnant people should not handle crushed or broken tablets.
+  - `finasteride_psychiatric_screen(features)` — Health Canada updated the Canadian product monographs (Propecia/Proscar) in January 2024 with mood alterations (depressed mood, depression, self-harm, suicidal ideation, including worsening of pre-existing depression) and recommends screening every patient before prescribing. Active suicidal ideation or self-harm → `active_risk_do_not_initiate` (block, surface crisis resources); a depression history → `history_clinician_review`; otherwise `screen_negative` (still counsel and document).
+  - Outputs are contraindication and screen verdicts — not prescriptions, doses, or routes. The psychiatric screen is explicitly not a validated suicide-risk instrument. Registered in the engine catalog and the demo.
+  - Sources: U.S. FDA PROPECIA (finasteride) prescribing information, NDA 020788 (teratogenicity); Health Canada Summary Safety Review and the January 2024 Canadian product-monograph update (psychiatric risk; pre-prescribe screen).
+- 9 new tests covering both contraindication branches, the psychiatric-screen precedence (active SI over depression history), the negative-screen counselling path, and output shape. Total repo test count: 919.
+
+Closes #49.
+
 ## [0.30.0] — 2026-06-12
 
 ### Added
