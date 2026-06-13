@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twenty-two conditions are implemented (28 algorithm modules, 891 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, and renal presentations. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twenty-three conditions are implemented (29 algorithm modules, 910 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, renal, and medication-safety domains. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -58,8 +58,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Croup (Westley Croup Score) | [conditions/croup](conditions/croup) | Westley 1978 | Implemented |
 | Acute deterioration (NEWS2) | [conditions/early_warning](conditions/early_warning) | RCP 2017 | Implemented |
 | Alcohol withdrawal (CIWA-Ar) | [conditions/alcohol_withdrawal](conditions/alcohol_withdrawal) | Sullivan 1989 | Implemented |
+| Erectile dysfunction (PDE5 inhibitor + nitrate contraindication) | [conditions/pde5i_nitrate](conditions/pde5i_nitrate) | Schwartz 2010; Kloner 2003; FDA labels | Implemented |
 
-The remaining 28 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 27 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -357,6 +358,29 @@ features = CanadianCtHeadFeatures(
 )
 result = canadian_ct_head_assessment(features)
 print(result.ct_indicated, result.high_risk_factors_present)
+```
+
+Use the PDE5 inhibitor + nitrate module (medication-safety contraindication screen):
+
+```python
+from conditions.pde5i_nitrate import (
+    NitrateTimingFeatures,
+    Pde5iNitrateFeatures,
+    nitrate_timing_after_pde5i,
+    pde5i_nitrate_contraindication,
+)
+
+# Forward screen: a PDE5 inhibitor is being considered.
+screen = pde5i_nitrate_contraindication(
+    Pde5iNitrateFeatures(nitrate_or_no_donor_use=True, sgc_stimulator_use=False)
+)
+print(screen.verdict, screen.triggering_agents)
+
+# Reverse timing: a nitrate is being considered after a recent dose.
+timing = nitrate_timing_after_pde5i(
+    NitrateTimingFeatures(pde5_inhibitor="tadalafil", hours_since_last_pde5i_dose=36.0)
+)
+print(timing.interval_elapsed, timing.nitrate_coadministration_contraindicated)
 ```
 
 ## Contributing

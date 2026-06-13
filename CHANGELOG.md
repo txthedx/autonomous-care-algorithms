@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/) with the conventions described in [docs/methodology.md](docs/methodology.md).
 
+## [0.30.0] — 2026-06-12
+
+### Added
+- Twenty-third condition: **PDE5 inhibitor + nitrate contraindication** — the first medication-safety module, and the first to return a contraindication *verdict* rather than a numeric score.
+  - `pde5i_nitrate_contraindication(features)` — forward screen used when a PDE5 inhibitor is being considered: any concomitant nitrate / nitric-oxide donor (including nitrite "poppers") or soluble guanylate cyclase stimulator (e.g. riociguat) returns `absolute_contraindication`, with the triggering agent classes; otherwise `no_contraindication_detected`. The combination causes profound, prolonged hypotension via the shared nitric-oxide–cGMP pathway, with reported myocardial infarction and death.
+  - `nitrate_timing_after_pde5i(features)` — reverse, time-dependent check used when a nitrate is being considered after a recent PDE5-inhibitor dose: reports the agent-specific interval beyond which the acute interaction is no longer observed (sildenafil and vardenafil 24 h, avanafil 12 h, tadalafil 48 h) and flags whether co-administration remains contraindicated. `hours_since_last_pde5i_dose` must be zero or positive; negatives raise `ValueError`.
+  - Outputs are contraindication verdicts and timing flags — not prescriptions, doses, or routes. Caveats note the screen covers only this interaction, that drug exposure is supplied as input, and that interval elapse is necessary but not sufficient. Registered in the engine catalog and the demo.
+  - Sources: Schwartz BG, Kloner RA, *Circulation* 2010 (PMID 20606131); Kloner RA et al., *J Am Coll Cardiol* 2003 (PMID 14642699); U.S. FDA STENDRA (avanafil, NDA 202276) and ADEMPAS (riociguat, NDA 204819) prescribing information.
+- 19 new tests covering both branches of the forward screen, each agent's interval boundary (just-before / at / after), the Kloner 2003 tadalafil worked example (contraindicated at 24 h, elapsed at 48 h), the negative-hours guard, and output shape. Total repo test count: 910.
+
+Closes #47.
+
 ## [0.29.0] — 2026-06-07
 
 ### Added
