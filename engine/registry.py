@@ -158,6 +158,18 @@ _REGISTRY: tuple[_Entry, ...] = (
            "conditions.pde5i_nitrate", "nitrate_timing_after_pde5i",
            ("erectile dysfunction", "medication safety", "contraindication"),
            ("NitrateTimingFeatures",)),
+    _Entry("finasteride_contraindication",
+           "Hair loss — finasteride teratogenicity contraindication",
+           "conditions.finasteride_safety", "finasteride_contraindication",
+           ("hair loss", "androgenetic alopecia", "medication safety",
+            "contraindication"),
+           ("FinasterideContraindicationFeatures",)),
+    _Entry("finasteride_psychiatric",
+           "Hair loss — finasteride pre-prescribe psychiatric screen",
+           "conditions.finasteride_safety", "finasteride_psychiatric_screen",
+           ("hair loss", "androgenetic alopecia", "medication safety",
+            "depression screen"),
+           ("FinasteridePsychiatricFeatures",)),
 )
 
 _BY_KEY: dict[str, _Entry] = {e.key: e for e in _REGISTRY}

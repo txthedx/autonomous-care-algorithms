@@ -13,7 +13,7 @@ Open-source, citation-backed clinical decision algorithms for the most common pr
 
 ## Status
 
-Active. Twenty-three conditions are implemented (29 algorithm modules, 910 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, renal, and medication-safety domains. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
+Active. Twenty-four conditions are implemented (30 algorithm modules, 919 passing tests), spanning infectious, cardiovascular, thromboembolic, musculoskeletal, gastrointestinal, neurologic, geriatric, trauma, renal, and medication-safety domains. The roadmap targets the 50 most common primary care presenting complaints, prioritized by frequency in Canadian and US family practice.
 
 The project is evolving from a library into a queryable, near-real-time clinical decision-support engine (a deterministic core with MCP and REST interfaces, and an optional note→features adapter). See [docs/architecture.md](docs/architecture.md) for the design and [docs/autonomous-setup.md](docs/autonomous-setup.md) for how it is built.
 
@@ -59,8 +59,9 @@ See [docs/methodology.md](docs/methodology.md) for how algorithms are sourced, r
 | Acute deterioration (NEWS2) | [conditions/early_warning](conditions/early_warning) | RCP 2017 | Implemented |
 | Alcohol withdrawal (CIWA-Ar) | [conditions/alcohol_withdrawal](conditions/alcohol_withdrawal) | Sullivan 1989 | Implemented |
 | Erectile dysfunction (PDE5 inhibitor + nitrate contraindication) | [conditions/pde5i_nitrate](conditions/pde5i_nitrate) | Schwartz 2010; Kloner 2003; FDA labels | Implemented |
+| Finasteride safety (teratogenicity + psychiatric screen) | [conditions/finasteride_safety](conditions/finasteride_safety) | FDA Propecia label; Health Canada 2024 | Implemented |
 
-The remaining 27 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+The remaining 26 are tracked in [issue #9 — roadmap](https://github.com/txthedx/autonomous-care-algorithms/issues/9); the original tranche of individual issues is now complete. Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -381,6 +382,29 @@ timing = nitrate_timing_after_pde5i(
     NitrateTimingFeatures(pde5_inhibitor="tadalafil", hours_since_last_pde5i_dose=36.0)
 )
 print(timing.interval_elapsed, timing.nitrate_coadministration_contraindicated)
+```
+
+Use the finasteride safety module (teratogenicity contraindication + Health Canada psychiatric screen):
+
+```python
+from conditions.finasteride_safety import (
+    FinasterideContraindicationFeatures,
+    FinasteridePsychiatricFeatures,
+    finasteride_contraindication,
+    finasteride_psychiatric_screen,
+)
+
+print(finasteride_contraindication(
+    FinasterideContraindicationFeatures(pregnant_or_able_to_become_pregnant=True)
+).verdict)
+
+screen = finasteride_psychiatric_screen(
+    FinasteridePsychiatricFeatures(
+        active_suicidal_ideation_or_self_harm=True,
+        current_or_past_depression=False,
+    )
+)
+print(screen.verdict, screen.block_initiation)
 ```
 
 ## Contributing
